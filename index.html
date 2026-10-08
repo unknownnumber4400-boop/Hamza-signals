@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HAMZA'S SIGNALS</title>
 
 <style>
@@ -10,574 +10,303 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
   min-height:100vh;
-  overflow-x:hidden;
-  color:#fff;
   background:
-    radial-gradient(circle at 50% 20%,#07355f 0%,#030b17 38%,#000 100%);
+    radial-gradient(circle at center,#071d3b 0%,#020711 45%,#000 100%);
+  color:white;
+  overflow-x:hidden;
 }
 
 body:before{
   content:"";
   position:fixed;
-  inset:0;
-  background-image:
-    radial-gradient(#00d9ff 1px,transparent 1px),
-    radial-gradient(#168cff 1px,transparent 1px);
-  background-size:55px 55px,90px 90px;
-  background-position:0 0,30px 40px;
-  opacity:.16;
-  animation:stars 12s linear infinite;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:#008cff;
+  filter:blur(180px);
+  opacity:.12;
+  left:50%;
+  top:45%;
+  transform:translate(-50%,-50%);
   pointer-events:none;
 }
 
-@keyframes stars{
-  to{
-    background-position:100px 150px,130px 190px;
-  }
-}
-
-.app{
-  width:100%;
-  max-width:490px;
+.screen{
   min-height:100vh;
-  margin:auto;
-  padding:20px 17px;
+  display:none;
+  padding:25px 18px;
   position:relative;
   z-index:2;
 }
 
-.screen{
-  display:none;
-  min-height:94vh;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  animation:screenIn .45s ease;
-}
-
 .screen.active{
   display:flex;
-}
-
-@keyframes screenIn{
-  from{
-    opacity:0;
-    transform:translateY(18px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  flex-direction:column;
+  align-items:center;
 }
 
 .logo{
+  margin-top:15px;
   font-size:27px;
   font-weight:900;
-  letter-spacing:2px;
-  text-align:center;
-  text-shadow:
-    0 0 8px #00cfff,
-    0 0 24px #007bff,
-    0 0 45px #005eff;
+  letter-spacing:3px;
+  color:#4db8ff;
+  text-shadow:0 0 15px #008cff;
 }
 
 .subtitle{
   margin-top:8px;
-  color:#8da9c5;
-  font-size:12px;
-  letter-spacing:1px;
+  color:#9bb8d5;
+  font-size:13px;
   text-align:center;
-}
-
-/* ORB */
-
-.orbWrap{
-  position:relative;
-  margin:32px auto;
-  width:180px;
-  height:180px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 .orb{
-  width:125px;
-  height:125px;
+  width:230px;
+  height:230px;
   border-radius:50%;
-  position:relative;
-
-  background:
-    radial-gradient(
-      circle at 35% 28%,
-      #e0fbff 0%,
-      #21b5ff 9%,
-      #0862d2 34%,
-      #021c48 67%,
-      #000 100%
-    );
-
-  box-shadow:
-    0 0 25px #00bfff,
-    0 0 55px #0066ff,
-    0 0 90px rgba(0,100,255,.5),
-    inset 0 0 28px #00d9ff;
-
-  animation:pulse 2s infinite ease-in-out;
+  margin:45px auto 35px;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   text-align:center;
+  position:relative;
+  background:
+    radial-gradient(circle at 35% 30%,#74d0ff,#087be0 25%,#032451 58%,#010711 78%);
+  box-shadow:
+    0 0 25px #008cff,
+    0 0 70px #006eff,
+    inset 0 0 35px #00aaff;
+  animation:orb 3s ease-in-out infinite;
 }
 
-.orbRing1,
-.orbRing2{
+.orb:before,
+.orb:after{
+  content:"";
   position:absolute;
+  inset:-15px;
+  border:2px solid #168cff;
   border-radius:50%;
-  border:1px solid rgba(0,205,255,.8);
-  pointer-events:none;
+  opacity:.55;
+  animation:spin 6s linear infinite;
 }
 
-.orbRing1{
-  inset:10px;
-  animation:spin 4s linear infinite;
-}
-
-.orbRing2{
-  inset:-8px;
-  border-style:dashed;
-  opacity:.6;
-  animation:spinReverse 7s linear infinite;
+.orb:after{
+  inset:-30px;
+  border-color:#00d9ff;
+  opacity:.2;
+  animation-duration:9s;
+  animation-direction:reverse;
 }
 
 .orbText{
-  position:relative;
-  z-index:4;
-  font-size:12px;
+  font-size:20px;
   font-weight:900;
-  letter-spacing:1px;
-  line-height:1.45;
-  text-shadow:0 0 10px #00d9ff;
+  letter-spacing:2px;
+  text-shadow:0 0 12px #fff;
+  z-index:3;
 }
 
-.orbTime{
-  font-size:21px;
-  color:#fff;
+.dots{
+  position:absolute;
+  inset:-50px;
+  border-radius:50%;
+  animation:spin 10s linear infinite;
 }
 
-@keyframes pulse{
-  0%,100%{
-    transform:scale(.94);
-  }
-  50%{
-    transform:scale(1.05);
-  }
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-@keyframes spinReverse{
-  to{
-    transform:rotate(-360deg);
-  }
-}
-
-.particle{
+.dots span{
   position:absolute;
   width:5px;
   height:5px;
   border-radius:50%;
-  background:#00e5ff;
-  box-shadow:0 0 14px #00e5ff;
-  z-index:5;
-  animation:float 2s infinite ease-in-out;
+  background:#00bfff;
+  box-shadow:0 0 10px #00bfff;
 }
 
-.p1{left:5px;top:30px}
-.p2{right:4px;top:55px;animation-delay:.3s}
-.p3{left:22px;bottom:17px;animation-delay:.7s}
-.p4{right:17px;bottom:25px;animation-delay:1s}
-.p5{left:48px;top:0;animation-delay:.5s}
-.p6{right:48px;top:8px;animation-delay:1.2s}
+.dots span:nth-child(1){top:10%;left:50%}
+.dots span:nth-child(2){top:30%;right:3%}
+.dots span:nth-child(3){bottom:15%;right:18%}
+.dots span:nth-child(4){bottom:5%;left:45%}
+.dots span:nth-child(5){bottom:25%;left:4%}
+.dots span:nth-child(6){top:25%;left:5%}
 
-@keyframes float{
-  50%{
-    transform:translateY(-17px) scale(1.6);
-    opacity:.45;
-  }
+@keyframes orb{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.035)}
 }
 
-/* PANEL */
+@keyframes spin{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
 
-.panel{
+.box{
   width:100%;
-  padding:20px;
+  max-width:430px;
+  background:rgba(7,18,34,.72);
+  border:1px solid rgba(0,153,255,.35);
   border-radius:22px;
-  border:1px solid rgba(0,190,255,.28);
-  background:rgba(4,15,30,.84);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 35px rgba(0,130,255,.13);
+  padding:20px;
+  box-shadow:0 0 30px rgba(0,120,255,.12);
+  backdrop-filter:blur(15px);
 }
 
-.title{
-  text-align:center;
-  font-size:20px;
-  font-weight:800;
-  margin-bottom:18px;
-}
-
-.input{
+input,
+button{
   width:100%;
+  border-radius:14px;
   padding:15px;
-  margin-bottom:12px;
-  color:#fff;
-  background:#08182b;
-  border:1px solid #19486c;
-  border-radius:13px;
+  margin-top:12px;
+  font-size:15px;
+}
+
+input{
+  color:white;
+  background:#020a14;
+  border:1px solid #164a78;
   outline:none;
-  font-size:15px;
 }
 
-.input:focus{
-  border-color:#00cfff;
-  box-shadow:0 0 14px rgba(0,200,255,.2);
+input:focus{
+  border-color:#00aaff;
+  box-shadow:0 0 15px #008cff55;
 }
 
-.btn{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:13px;
-  color:#fff;
+button{
+  border:1px solid #008cff;
+  background:linear-gradient(90deg,#0066ff,#00aaff);
+  color:white;
   font-weight:800;
-  font-size:15px;
-  background:linear-gradient(100deg,#006eff,#00cfff);
-  box-shadow:0 0 20px rgba(0,170,255,.28);
   cursor:pointer;
+  box-shadow:0 0 18px #008cff55;
 }
 
-.btn:active{
-  transform:scale(.97);
+button:active{
+  transform:scale(.98);
 }
 
-/* OPTIONS */
-
-.options{
+.optionGrid{
+  width:100%;
+  max-width:500px;
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
+  margin-top:15px;
 }
 
 .option{
-  min-height:95px;
-  padding:15px 9px;
+  padding:18px 10px;
   border-radius:17px;
-  border:1px solid #193b5d;
-  background:rgba(7,22,39,.9);
   text-align:center;
+  background:rgba(5,17,32,.75);
+  border:1px solid #16466d;
   cursor:pointer;
-  transition:.25s;
+  transition:.2s;
+  font-weight:800;
 }
 
+.option:hover,
 .option.selected{
-  border-color:#00cfff;
-  background:rgba(0,113,190,.18);
-  box-shadow:0 0 22px rgba(0,190,255,.25);
-  transform:translateY(-3px);
+  border-color:#00aaff;
+  box-shadow:0 0 18px #008cff66;
+  background:rgba(0,94,170,.2);
 }
-
-.icon{
-  font-size:27px;
-  margin-bottom:7px;
-}
-
-.option b{
-  display:block;
-  font-size:14px;
-}
-
-.option small{
-  display:block;
-  color:#7895b4;
-  margin-top:5px;
-}
-
-.selectedText{
-  text-align:center;
-  color:#8da9c4;
-  margin:15px 0;
-  font-size:13px;
-}
-
-/* SEARCH */
 
 .search{
-  width:100%;
-  padding:14px 15px;
-  margin-bottom:13px;
-  border-radius:13px;
-  border:1px solid #19486c;
-  background:#08182b;
-  color:#fff;
-  outline:none;
+  max-width:500px;
+  margin-top:15px;
 }
 
 .pairList{
-  max-height:300px;
+  width:100%;
+  max-width:500px;
+  max-height:410px;
   overflow-y:auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
+  margin-top:12px;
+  padding-right:3px;
 }
 
-.pairItem{
-  padding:13px 8px;
-  border-radius:12px;
-  border:1px solid #173a59;
-  background:#071729;
-  color:#fff;
-  cursor:pointer;
-  text-align:center;
-  font-size:13px;
-}
-
-.pairItem.selected{
-  border-color:#00d5ff;
-  box-shadow:0 0 15px rgba(0,200,255,.25);
-  background:#0a3150;
-}
-
-/* LOADER */
-
-.loader{
-  display:none;
-  text-align:center;
-  margin-top:23px;
-}
-
-.loader.active{
-  display:block;
-}
-
-.loaderCircle{
-  width:55px;
-  height:55px;
-  margin:auto;
-  border:4px solid #12304c;
-  border-top-color:#00c8ff;
-  border-right-color:#007bff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-
-.loader p{
-  margin-top:10px;
-  color:#7da4c7;
-}
-
-/* RESULT */
-
-.result{
-  text-align:center;
-}
-
-.signalWord{
-  font-size:42px;
-  font-weight:900;
-  margin:16px 0;
-}
-
-.buy{
-  color:#00ff91;
-  text-shadow:0 0 20px #00ff91;
-}
-
-.sell{
-  color:#ff315b;
-  text-shadow:0 0 20px #ff315b;
-}
-
-.confidence{
-  font-size:18px;
-  color:#8fdfff;
-  margin-bottom:18px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.info{
-  background:#09192b;
-  border:1px solid #173752;
-  border-radius:13px;
-  padding:13px;
-}
-
-.info small{
-  color:#718aa5;
-  display:block;
-}
-
-.info b{
-  display:block;
-  margin-top:5px;
-}
-
-/* AI */
-
-.aiFloat{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#006eff,#00d9ff);
-  box-shadow:
-    0 0 15px #00cfff,
-    0 0 35px rgba(0,150,255,.6);
-  border:1px solid #7eeaff;
-  color:#fff;
-  font-size:25px;
-  z-index:100;
-  cursor:pointer;
-  animation:aiPulse 2s infinite;
-}
-
-@keyframes aiPulse{
-  50%{
-    transform:scale(1.08);
-  }
-}
-
-.aiPopup{
-  display:none;
-  position:fixed;
-  right:16px;
-  bottom:88px;
-  width:min(340px,calc(100vw - 32px));
-  z-index:101;
-  background:rgba(4,15,30,.97);
-  border:1px solid #00bfff;
-  border-radius:20px;
-  padding:17px;
-  box-shadow:0 0 35px rgba(0,160,255,.35);
-}
-
-.aiPopup.show{
-  display:block;
-  animation:screenIn .25s ease;
-}
-
-.aiPopup h3{
-  margin-bottom:8px;
-}
-
-.aiPopup p{
-  color:#9bb1c8;
-  font-size:13px;
-  line-height:1.5;
-  margin-bottom:13px;
-}
-
-.aiButtons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.aiChat{
-  display:none;
-  position:fixed;
-  right:16px;
-  bottom:88px;
-  width:min(370px,calc(100vw - 32px));
-  height:430px;
-  z-index:102;
-  background:rgba(3,13,27,.98);
-  border:1px solid #00bfff;
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 0 40px rgba(0,160,255,.35);
-}
-
-.aiChat.show{
-  display:flex;
-  flex-direction:column;
-}
-
-.aiHeader{
+.pair{
   padding:15px;
-  background:linear-gradient(100deg,#006eff,#00bfff);
-  font-weight:800;
+  margin-bottom:9px;
+  border-radius:13px;
+  border:1px solid #173d60;
+  background:rgba(4,15,28,.8);
+  cursor:pointer;
   display:flex;
   justify-content:space-between;
 }
 
-.aiMessages{
-  flex:1;
-  overflow-y:auto;
-  padding:13px;
+.pair:hover{
+  border-color:#00aaff;
+  box-shadow:0 0 12px #008cff44;
 }
 
-.msg{
-  padding:10px;
-  border-radius:12px;
-  margin-bottom:9px;
-  font-size:13px;
-  line-height:1.4;
-}
-
-.aiMsg{
-  background:#0c243b;
-}
-
-.userMsg{
-  background:#064b78;
-  text-align:right;
-}
-
-.aiInput{
-  display:flex;
-  padding:10px;
-  gap:7px;
-  border-top:1px solid #173752;
-}
-
-.aiInput input{
-  flex:1;
-  min-width:0;
-  padding:11px;
+.back{
+  max-width:500px;
   background:#07182a;
-  border:1px solid #214563;
-  border-radius:10px;
-  color:#fff;
-  outline:none;
+  border-color:#245174;
+  margin-top:20px;
 }
 
-.aiInput button{
-  width:48px;
-  border:0;
-  border-radius:10px;
-  background:#008cff;
-  color:white;
+.status{
+  margin-top:15px;
+  color:#8db5d5;
+  text-align:center;
+  font-size:13px;
+}
+
+.resultCard{
+  width:100%;
+  max-width:500px;
+  margin-top:20px;
+  padding:25px;
+  border-radius:24px;
+  background:rgba(4,16,29,.85);
+  border:1px solid #1466a0;
+  box-shadow:0 0 35px #008cff22;
+  text-align:center;
+}
+
+.signal{
+  font-size:50px;
+  font-weight:1000;
+  margin:15px 0;
+  text-shadow:0 0 25px currentColor;
+}
+
+.buy{color:#00ff8c}
+.sell{color:#ff4055}
+
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
+
+.infoBox{
+  padding:13px;
+  border-radius:12px;
+  background:#061322;
+  border:1px solid #153d5d;
+}
+
+.infoBox small{
+  display:block;
+  color:#7294ae;
+  margin-bottom:5px;
 }
 
 .history{
+  width:100%;
+  max-width:500px;
   margin-top:20px;
-  text-align:left;
 }
 
 .history h3{
@@ -585,143 +314,162 @@ body:before{
 }
 
 .historyItem{
-  display:flex;
-  justify-content:space-between;
-  padding:11px 5px;
-  border-bottom:1px solid #13283e;
+  padding:12px;
+  border-radius:12px;
+  background:#061322;
+  border:1px solid #163a59;
+  margin-bottom:8px;
   font-size:13px;
 }
 
-.footer{
-  text-align:center;
-  margin-top:18px;
-  color:#526b84;
-  font-size:11px;
+.aiButton{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  z-index:50;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+  background:#087cff;
+  box-shadow:0 0 25px #008cff;
+  border:2px solid #70ceff;
+  cursor:pointer;
 }
 
-.hidden{
-  display:none!important;
+.aiPanel{
+  position:fixed;
+  right:15px;
+  bottom:85px;
+  width:calc(100% - 30px);
+  max-width:370px;
+  background:#061323;
+  border:1px solid #168cff;
+  border-radius:20px;
+  padding:18px;
+  z-index:49;
+  display:none;
+  box-shadow:0 0 30px #008cff55;
+}
+
+.aiPanel.show{
+  display:block;
+}
+
+.aiMessages{
+  height:180px;
+  overflow-y:auto;
+  padding:8px;
+  background:#020914;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
+.msg{
+  padding:9px;
+  margin-bottom:7px;
+  border-radius:10px;
+  background:#0b2843;
+  font-size:13px;
+}
+
+.loading{
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  50%{opacity:.45}
+}
+
+.error{
+  color:#ff6675;
+}
+
+@media(max-width:420px){
+  .orb{
+    width:205px;
+    height:205px;
+  }
+
+  .logo{
+    font-size:23px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
 <!-- LOGIN -->
-
-<section id="login" class="screen active">
+<section id="loginScreen" class="screen active">
 
   <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">AI TRADING SIGNAL PLATFORM</div>
+  <div class="subtitle">AI POWERED TRADING SIGNALS</div>
 
-  <div class="orbWrap">
-
-    <div class="orb">
-      <div class="orbRing1"></div>
-      <div class="orbRing2"></div>
-
-      <div class="orbText">
-        <div>LOADING</div>
-        <div>MARKET SCANNING</div>
-      </div>
+  <div class="orb">
+    <div class="dots">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
     </div>
 
-    <i class="particle p1"></i>
-    <i class="particle p2"></i>
-    <i class="particle p3"></i>
-    <i class="particle p4"></i>
-    <i class="particle p5"></i>
-    <i class="particle p6"></i>
-
+    <div class="orbText">
+      MARKET<br>SCANNING
+    </div>
   </div>
 
-  <div class="panel">
-
-    <div class="title">🔐 LOGIN</div>
+  <div class="box">
 
     <input
       id="username"
-      class="input"
       type="text"
       placeholder="Username"
-      autocomplete="off">
+      autocomplete="off"
+    >
 
     <input
       id="password"
-      class="input"
       type="password"
       placeholder="Password"
-      autocomplete="off">
+    >
 
-    <button class="btn" onclick="login()">
+    <button onclick="login()">
       LOGIN
     </button>
 
-  </div>
+    <div id="loginStatus" class="status"></div>
 
-  <div class="footer">
-    HAMZA'S SIGNALS • Secure Access
   </div>
-
 </section>
 
 
 <!-- BROKER -->
+<section id="brokerScreen" class="screen">
 
-<section id="broker" class="screen">
+  <div class="logo">SELECT BROKER</div>
 
-  <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">SELECT YOUR BROKER</div>
-
-  <div class="orbWrap">
-
-    <div class="orb">
-      <div class="orbRing1"></div>
-      <div class="orbRing2"></div>
-
-      <div class="orbText">
-        MARKET<br>SCANNING
-      </div>
+  <div class="orb">
+    <div class="dots">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
     </div>
 
-    <i class="particle p1"></i>
-    <i class="particle p2"></i>
-    <i class="particle p3"></i>
-    <i class="particle p4"></i>
-
+    <div class="orbText">
+      SELECT<br>BROKER
+    </div>
   </div>
 
-  <div class="panel">
+  <div class="optionGrid">
 
-    <div class="title">BROKER</div>
-
-    <div class="options">
-
-      <div class="option"
-           onclick="chooseBroker('Quotex',this)">
-        <div class="icon">📈</div>
-        <b>QUOTEX</b>
-        <small>Trading Platform</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseBroker('Tradowix',this)">
-        <div class="icon">⚡</div>
-        <b>TRADOWIX</b>
-        <small>Trading Platform</small>
-      </div>
-
+    <div class="option" onclick="selectBroker('Quotex',this)">
+      🟢 QUOTEX
     </div>
 
-    <div class="selectedText" id="brokerText">
-      Select your broker
+    <div class="option" onclick="selectBroker('Tradowix',this)">
+      🔵 TRADOWIX
     </div>
-
-    <button class="btn" onclick="goTimeframe()">
-      CONTINUE →
-    </button>
 
   </div>
 
@@ -729,631 +477,442 @@ body:before{
 
 
 <!-- TIMEFRAME -->
-
 <section id="timeframeScreen" class="screen">
 
-  <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">SELECT TIME FRAME</div>
+  <div class="logo">SELECT TIMEFRAME</div>
 
-  <div class="orbWrap">
+  <div class="orb">
 
-    <div class="orb">
-
-      <div class="orbRing1"></div>
-      <div class="orbRing2"></div>
-
-      <div class="orbText">
-        <div id="orbStatus">MARKET</div>
-        <div id="orbTime" class="orbTime">SCANNING</div>
-      </div>
-
+    <div class="dots">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
     </div>
 
-    <i class="particle p1"></i>
-    <i class="particle p2"></i>
-    <i class="particle p3"></i>
-    <i class="particle p4"></i>
-    <i class="particle p5"></i>
-    <i class="particle p6"></i>
+    <div id="timeOrb" class="orbText">
+      SELECT<br>TIME
+    </div>
 
   </div>
 
-  <div class="panel">
+  <div class="optionGrid">
 
-    <div class="title">⏱ SELECT TIME FRAME</div>
-
-    <div class="options">
-
-      <div class="option"
-           onclick="chooseTime('5 SEC',this)">
-        <div class="icon">⚡</div>
-        <b>5 SEC</b>
-        <small>Ultra short</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseTime('15 SEC',this)">
-        <div class="icon">⚡</div>
-        <b>15 SEC</b>
-        <small>Short-term</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseTime('30 SEC',this)">
-        <div class="icon">⏱️</div>
-        <b>30 SEC</b>
-        <small>Quick analysis</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseTime('1 MIN',this)">
-        <div class="icon">◉</div>
-        <b>1 MIN</b>
-        <small>Short-term</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseTime('2 MIN',this)">
-        <div class="icon">◈</div>
-        <b>2 MIN</b>
-        <small>Trend analysis</small>
-      </div>
-
-      <div class="option"
-           onclick="chooseTime('5 MIN',this)">
-        <div class="icon">◉</div>
-        <b>5 MIN</b>
-        <small>Market analysis</small>
-      </div>
-
-    </div>
-
-    <div class="selectedText" id="timeText">
-      Select timeframe
-    </div>
-
-    <button class="btn" onclick="goPairs()">
-      CONTINUE →
-    </button>
+    <div class="option" onclick="selectTime('5 SEC',this)">5 SEC</div>
+    <div class="option" onclick="selectTime('15 SEC',this)">15 SEC</div>
+    <div class="option" onclick="selectTime('30 SEC',this)">30 SEC</div>
+    <div class="option" onclick="selectTime('1 MIN',this)">1 MIN</div>
+    <div class="option" onclick="selectTime('2 MIN',this)">2 MIN</div>
+    <div class="option" onclick="selectTime('5 MIN',this)">5 MIN</div>
 
   </div>
+
+  <button class="back" onclick="showScreen('brokerScreen')">
+    ← BACK
+  </button>
 
 </section>
 
 
-<!-- PAIRS -->
+<!-- PAIR -->
+<section id="pairScreen" class="screen">
 
-<section id="pairs" class="screen">
+  <div class="logo">SELECT PAIR</div>
 
-  <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">SELECT CURRENCY PAIR</div>
-
-  <div class="orbWrap">
-
-    <div class="orb">
-
-      <div class="orbRing1"></div>
-      <div class="orbRing2"></div>
-
-      <div class="orbText">
-        MARKET<br>SCANNING
-      </div>
-
-    </div>
-
-    <i class="particle p1"></i>
-    <i class="particle p2"></i>
-    <i class="particle p3"></i>
-    <i class="particle p4"></i>
-
+  <div class="subtitle">
+    Choose a currency or asset
   </div>
 
-  <div class="panel">
+  <input
+    id="pairSearch"
+    class="search"
+    placeholder="🔎 Search pair..."
+    oninput="filterPairs()"
+  >
 
-    <div class="title">💱 CURRENCY PAIRS</div>
+  <div id="pairList" class="pairList"></div>
 
-    <input
-      id="pairSearch"
-      class="search"
-      type="search"
-      placeholder="🔎 Search currency pair..."
-      oninput="filterPairs()">
-
-    <div id="pairList" class="pairList"></div>
-
-    <div class="selectedText" id="pairText">
-      Select currency pair
-    </div>
-
-    <button class="btn" onclick="generateSignal()">
-      ⚡ GENERATE SIGNAL
-    </button>
-
-    <div class="loader" id="loader">
-      <div class="loaderCircle"></div>
-      <p id="loaderText">MARKET SCANNING...</p>
-    </div>
-
-  </div>
+  <button class="back" onclick="showScreen('timeframeScreen')">
+    ← BACK
+  </button>
 
 </section>
 
 
 <!-- RESULT -->
-
-<section id="result" class="screen">
+<section id="resultScreen" class="screen">
 
   <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">SIGNAL GENERATED</div>
 
-  <div class="orbWrap">
+  <div class="subtitle">
+    REAL MARKET ANALYSIS
+  </div>
 
-    <div class="orb">
+  <div id="scanOrb" class="orb">
 
-      <div class="orbRing1"></div>
-      <div class="orbRing2"></div>
-
-      <div class="orbText">
-        <div>SIGNAL</div>
-        <div>READY</div>
-      </div>
-
+    <div class="dots">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
     </div>
 
-    <i class="particle p1"></i>
-    <i class="particle p2"></i>
-    <i class="particle p3"></i>
-    <i class="particle p4"></i>
+    <div id="scanText" class="orbText">
+      READY
+    </div>
 
   </div>
 
-  <div class="panel result">
+  <div class="resultCard">
 
-    <div id="resultPair">EUR/USD</div>
+    <div id="selectedInfo" class="subtitle"></div>
 
-    <div id="signalWord" class="signalWord buy">
-      BUY 🟢
+    <div id="signal" class="signal">
+      READY
     </div>
 
-    <div id="confidence" class="confidence">
-      Confidence: 80%
+    <div id="signalStatus" class="status">
+      Press Generate Signal
     </div>
 
-    <div class="grid">
+    <div class="info">
 
-      <div class="info">
-        <small>Broker</small>
-        <b id="resultBroker">Quotex</b>
+      <div class="infoBox">
+        <small>PAIR</small>
+        <b id="rPair">-</b>
       </div>
 
-      <div class="info">
-        <small>Timeframe</small>
-        <b id="resultTime">1 MIN</b>
+      <div class="infoBox">
+        <small>PRICE</small>
+        <b id="rPrice">-</b>
       </div>
 
-      <div class="info">
-        <small>Entry</small>
-        <b id="entry">--:--:--</b>
+      <div class="infoBox">
+        <small>RSI</small>
+        <b id="rRsi">-</b>
       </div>
 
-      <div class="info">
-        <small>Trend</small>
-        <b id="trend">Bullish 📈</b>
+      <div class="infoBox">
+        <small>CONFIDENCE</small>
+        <b id="rConfidence">-</b>
+      </div>
+
+      <div class="infoBox">
+        <small>EMA 9</small>
+        <b id="rEma9">-</b>
+      </div>
+
+      <div class="infoBox">
+        <small>EMA 21</small>
+        <b id="rEma21">-</b>
       </div>
 
     </div>
 
-    <button class="btn" onclick="show('pairs')">
-      🔄 NEW SIGNAL
+    <button onclick="generateSignal()">
+      ⚡ GENERATE SIGNAL
     </button>
 
-    <div class="history">
-      <h3>📜 Signal History</h3>
-      <div id="history"></div>
-    </div>
+    <button class="back" onclick="showScreen('pairScreen')">
+      ← CHANGE PAIR
+    </button>
+
+  </div>
+
+  <div class="history">
+
+    <h3>📜 SIGNAL HISTORY</h3>
+
+    <div id="historyList"></div>
 
   </div>
 
 </section>
 
+
+<!-- AI -->
+<div id="aiButton" class="aiButton" onclick="toggleAI()">
+  🤖
 </div>
 
-
-<!-- AI FLOATING BUTTON -->
-
-<button
-  id="aiFloat"
-  class="aiFloat hidden"
-  onclick="openAI()">
-  🤖
-</button>
-
-
-<!-- AI QUESTION POPUP -->
-
-<div id="aiPopup" class="aiPopup">
+<div id="aiPanel" class="aiPanel">
 
   <h3>🤖 HAMZA AI</h3>
 
-  <p>
-    Kya aap AI se baat karna ya koi
-    question poochna chahte hain?
-  </p>
-
-  <div class="aiButtons">
-
-    <button class="btn" onclick="startAI()">
-      YES
-    </button>
-
-    <button
-      class="btn"
-      onclick="closeAIPopup()">
-      NO
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- AI CHAT -->
-
-<div id="aiChat" class="aiChat">
-
-  <div class="aiHeader">
-
-    <span>🤖 HAMZA AI</span>
-
-    <span
-      style="cursor:pointer"
-      onclick="closeAI()">
-      ✕
-    </span>
-
-  </div>
-
   <div id="aiMessages" class="aiMessages">
 
-    <div class="msg aiMsg">
-      👋 Hello! Main Hamza AI hoon.
-      Aap app, indicators aur trading
-      concepts ke baare mein questions
-      pooch sakte hain.
+    <div class="msg">
+      Kya aap AI se baat karna ya koi question poochna chahte hain?
     </div>
 
   </div>
 
-  <div class="aiInput">
+  <input
+    id="aiInput"
+    placeholder="Ask something..."
+  >
 
-    <input
-      id="aiQuestion"
-      placeholder="Ask something..."
-      onkeydown="if(event.key==='Enter') askAI()">
-
-    <button onclick="askAI()">
-      ➤
-    </button>
-
-  </div>
+  <button onclick="sendAI()">
+    SEND
+  </button>
 
 </div>
 
 
 <script>
 
-/* ==============================
-   DATA
-============================== */
+/* =========================
+   CONFIG
+========================= */
 
-let broker = "";
-let timeframe = "";
-let pair = "";
+const MARKET_API =
+"https://hamza-signals-api.hamzamughal198226.workers.dev";
 
 
-/* Large searchable pair list */
+/* =========================
+   APP STATE
+========================= */
+
+let selectedBroker = "";
+let selectedTime = "";
+let selectedPair = "";
+
+let history = [];
+
+
+/* =========================
+   PAIRS
+========================= */
 
 const pairs = [
 
-"EUR/USD","GBP/USD","USD/JPY","AUD/USD",
-"USD/CAD","USD/CHF","NZD/USD",
+"EUR/USD",
+"GBP/USD",
+"USD/JPY",
+"AUD/USD",
+"USD/CAD",
+"USD/CHF",
+"NZD/USD",
 
-"EUR/GBP","EUR/JPY","EUR/CHF","EUR/AUD",
-"EUR/CAD","EUR/NZD",
+"EUR/GBP",
+"EUR/JPY",
+"EUR/CHF",
+"EUR/AUD",
+"EUR/CAD",
+"EUR/NZD",
 
-"GBP/JPY","GBP/CHF","GBP/AUD",
-"GBP/CAD","GBP/NZD",
+"GBP/JPY",
+"GBP/CHF",
+"GBP/AUD",
+"GBP/CAD",
+"GBP/NZD",
 
-"AUD/JPY","AUD/CHF","AUD/CAD","AUD/NZD",
+"AUD/JPY",
+"AUD/CHF",
+"AUD/CAD",
+"AUD/NZD",
 
-"CAD/JPY","CAD/CHF",
+"CAD/JPY",
+"CAD/CHF",
 
 "CHF/JPY",
 
-"NZD/JPY","NZD/CHF","NZD/CAD",
+"NZD/JPY",
+"NZD/CHF",
+"NZD/CAD",
 
-"USD/SGD","USD/HKD","USD/ZAR",
-"USD/MXN","USD/TRY",
+"USD/SGD",
+"USD/HKD",
+"USD/ZAR",
+"USD/MXN",
+"USD/TRY",
 
-"EUR/TRY","EUR/ZAR","GBP/ZAR",
+"EUR/TRY",
+"EUR/ZAR",
 
-"XAU/USD","XAG/USD"
+"GBP/ZAR",
+
+"XAU/USD",
+"XAG/USD"
 
 ];
 
 
-/* ==============================
+/* =========================
    SOUND
-============================== */
+========================= */
 
-let audioContext = null;
-
-function sound(type="click"){
+function beep(frequency=600,duration=100){
 
   try{
 
-    if(!audioContext){
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
 
-      audioContext =
-        new (window.AudioContext ||
-        window.webkitAudioContext)();
+    const ctx = new AudioContext();
 
-    }
-
-    const osc =
-      audioContext.createOscillator();
+    const oscillator =
+      ctx.createOscillator();
 
     const gain =
-      audioContext.createGain();
+      ctx.createGain();
 
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
+    oscillator.frequency.value =
+      frequency;
 
-    if(type==="success"){
-      osc.frequency.value=720;
-    }
-    else if(type==="signal"){
-      osc.frequency.value=900;
-    }
-    else{
-      osc.frequency.value=520;
-    }
+    oscillator.type = "sine";
 
-    gain.gain.setValueAtTime(
-      .0001,
-      audioContext.currentTime
-    );
+    gain.gain.value = .06;
 
-    gain.gain.exponentialRampToValueAtTime(
-      .08,
-      audioContext.currentTime+.02
-    );
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
 
-    gain.gain.exponentialRampToValueAtTime(
-      .0001,
-      audioContext.currentTime+.16
-    );
+    oscillator.start();
 
-    osc.start();
-    osc.stop(
-      audioContext.currentTime+.17
-    );
+    setTimeout(()=>{
+
+      oscillator.stop();
+      ctx.close();
+
+    },duration);
 
   }catch(e){}
 
 }
 
 
-/* ==============================
+/* =========================
    SCREEN
-============================== */
+========================= */
 
-function show(id){
+function showScreen(id){
 
   document
     .querySelectorAll(".screen")
-    .forEach(s=>{
-      s.classList.remove("active");
-    });
+    .forEach(s => s.classList.remove("active"));
 
   document
     .getElementById(id)
     .classList.add("active");
 
-  window.scrollTo(0,0);
 }
 
 
-/* ==============================
+/* =========================
    LOGIN
-============================== */
+========================= */
 
 function login(){
 
-  sound();
-
   const username =
-    document.getElementById("username")
-    .value.trim();
+    document.getElementById("username").value.trim();
 
   const password =
-    document.getElementById("password")
-    .value;
+    document.getElementById("password").value;
 
-  if(
-    username==="Hamza" &&
-    password==="Aliza"
-  ){
+  if(username === "Hamza" && password === "Aliza"){
 
-    sound("success");
+    beep(900,120);
 
-    show("broker");
+    document.getElementById("loginStatus").innerText =
+      "Login successful ✓";
 
     setTimeout(()=>{
-      document
-        .getElementById("aiPopup")
-        .classList.add("show");
 
-      document
-        .getElementById("aiFloat")
-        .classList.remove("hidden");
+      showScreen("brokerScreen");
 
-    },700);
+    },500);
 
   }else{
 
-    alert(
-      "❌ Invalid username or password"
-    );
+    beep(180,180);
+
+    document.getElementById("loginStatus").innerText =
+      "Wrong username or password";
 
   }
 
 }
 
 
-/* ==============================
+/* =========================
    BROKER
-============================== */
+========================= */
 
-function chooseBroker(value,element){
+function selectBroker(broker,element){
 
-  sound();
-
-  broker=value;
+  selectedBroker = broker;
 
   document
-    .querySelectorAll("#broker .option")
-    .forEach(x=>{
-      x.classList.remove("selected");
-    });
+    .querySelectorAll("#brokerScreen .option")
+    .forEach(x => x.classList.remove("selected"));
 
   element.classList.add("selected");
 
-  document
-    .getElementById("brokerText")
-    .innerText=
-      "Selected: "+value;
+  beep(700,100);
 
-}
+  setTimeout(()=>{
 
-function goTimeframe(){
+    showScreen("timeframeScreen");
 
-  if(!broker){
-
-    alert(
-      "Please select a broker first."
-    );
-
-    return;
-  }
-
-  sound();
-
-  show("timeframeScreen");
+  },300);
 
 }
 
 
-/* ==============================
+/* =========================
    TIMEFRAME
-============================== */
+========================= */
 
-function chooseTime(value,element){
+function selectTime(time,element){
 
-  sound();
-
-  timeframe=value;
+  selectedTime = time;
 
   document
-    .querySelectorAll(
-      "#timeframeScreen .option"
-    )
-    .forEach(x=>{
-      x.classList.remove("selected");
-    });
+    .querySelectorAll("#timeframeScreen .option")
+    .forEach(x => x.classList.remove("selected"));
 
   element.classList.add("selected");
 
-  document
-    .getElementById("timeText")
-    .innerText=
-      "Selected: "+value;
+  document.getElementById("timeOrb").innerHTML =
+    time.replace(" ","<br>");
 
-  document
-    .getElementById("orbStatus")
-    .innerText="TIMEFRAME";
+  beep(750,100);
 
-  document
-    .getElementById("orbTime")
-    .innerText=value;
+  setTimeout(()=>{
 
-}
+    showScreen("pairScreen");
 
+    renderPairs(pairs);
 
-function goPairs(){
-
-  if(!timeframe){
-
-    alert(
-      "Please select a timeframe first."
-    );
-
-    return;
-  }
-
-  sound();
-
-  show("pairs");
-
-  renderPairs(pairs);
+  },350);
 
 }
 
 
-/* ==============================
+/* =========================
    PAIRS
-============================== */
+========================= */
 
 function renderPairs(list){
 
   const box =
-    document.getElementById(
-      "pairList"
-    );
+    document.getElementById("pairList");
 
-  box.innerHTML="";
+  box.innerHTML = "";
 
-  list.forEach(p=>{
+  list.forEach(pair => {
 
-    const item =
+    const div =
       document.createElement("div");
 
-    item.className="pairItem";
+    div.className = "pair";
 
-    item.innerText=p;
+    div.innerHTML = `
+      <span>💱 ${pair}</span>
+      <span>›</span>
+    `;
 
-    item.onclick=()=>{
+    div.onclick = () => selectPair(pair);
 
-      sound();
-
-      pair=p;
-
-      document
-        .querySelectorAll(".pairItem")
-        .forEach(x=>{
-          x.classList.remove("selected");
-        });
-
-      item.classList.add("selected");
-
-      document
-        .getElementById("pairText")
-        .innerText=
-          "Selected: "+p;
-
-    };
-
-    box.appendChild(item);
+    box.appendChild(div);
 
   });
 
@@ -1362,7 +921,7 @@ function renderPairs(list){
 
 function filterPairs(){
 
-  const query =
+  const q =
     document
       .getElementById("pairSearch")
       .value
@@ -1370,8 +929,8 @@ function filterPairs(){
       .trim();
 
   const filtered =
-    pairs.filter(p=>
-      p.includes(query)
+    pairs.filter(p =>
+      p.includes(q)
     );
 
   renderPairs(filtered);
@@ -1379,287 +938,602 @@ function filterPairs(){
 }
 
 
-/* ==============================
-   SIGNAL
-============================== */
+function selectPair(pair){
 
-function generateSignal(){
+  selectedPair = pair;
 
-  if(!pair){
+  beep(850,100);
 
-    alert(
-      "Please select a currency pair first."
+  document.getElementById("selectedInfo").innerText =
+    `${selectedBroker} • ${selectedTime} • ${selectedPair}`;
+
+  document.getElementById("rPair").innerText =
+    selectedPair;
+
+  document.getElementById("scanText").innerText =
+    "READY";
+
+  showScreen("resultScreen");
+
+}
+
+
+/* =========================
+   REAL MARKET DATA
+========================= */
+
+async function getMarketData(symbol){
+
+  const url =
+    `${MARKET_API}/market?symbol=${encodeURIComponent(symbol)}&interval=1min`;
+
+  const response =
+    await fetch(url, {
+      cache:"no-store"
+    });
+
+  if(!response.ok){
+
+    throw new Error(
+      "Market API returned an error"
     );
 
-    return;
   }
 
-  sound();
+  const data =
+    await response.json();
 
-  const loader =
-    document.getElementById(
-      "loader"
+  if(
+    data.status !== "ok" ||
+    !Array.isArray(data.candles) ||
+    data.candles.length < 22
+  ){
+
+    throw new Error(
+      "Insufficient market candles"
     );
 
-  const loaderText =
-    document.getElementById(
-      "loaderText"
-    );
+  }
 
-  loader.classList.add("active");
-
-  loaderText.innerText=
-    "MARKET SCANNING...";
-
-  setTimeout(()=>{
-
-    loaderText.innerText=
-      "ANALYZING SIGNAL...";
-
-  },700);
-
-  setTimeout(()=>{
-
-    loaderText.innerText=
-      "SIGNAL READY";
-
-  },1300);
-
-  setTimeout(()=>{
-
-    loader.classList.remove("active");
-
-    /*
-      DEMO SIGNAL.
-      Real market data/backend
-      will be connected separately.
-    */
-
-    const buy =
-      Math.random()>=.5;
-
-    const confidence =
-      Math.floor(
-        Math.random()*11
-      )+80;
-
-    const entry =
-      new Date()
-      .toLocaleTimeString();
-
-    const word =
-      document.getElementById(
-        "signalWord"
-      );
-
-    word.innerText =
-      buy
-      ? "BUY 🟢"
-      : "SELL 🔴";
-
-    word.className =
-      "signalWord "+
-      (buy?"buy":"sell");
-
-    document.getElementById(
-      "resultPair"
-    ).innerText=pair;
-
-    document.getElementById(
-      "confidence"
-    ).innerText=
-      "Confidence: "+
-      confidence+"%";
-
-    document.getElementById(
-      "resultBroker"
-    ).innerText=broker;
-
-    document.getElementById(
-      "resultTime"
-    ).innerText=timeframe;
-
-    document.getElementById(
-      "entry"
-    ).innerText=entry;
-
-    document.getElementById(
-      "trend"
-    ).innerText=
-      buy
-      ? "Bullish 📈"
-      : "Bearish 📉";
-
-    addHistory(
-      pair,
-      buy?"BUY 🟢":"SELL 🔴",
-      confidence,
-      entry
-    );
-
-    sound("signal");
-
-    show("result");
-
-  },1800);
+  return data;
 
 }
 
 
-/* ==============================
+/* =========================
+   EMA
+========================= */
+
+function calculateEMA(values,period){
+
+  if(values.length < period){
+
+    return values[values.length-1];
+
+  }
+
+  let ema =
+    values
+      .slice(0,period)
+      .reduce((a,b)=>a+b,0) / period;
+
+  const multiplier =
+    2 / (period + 1);
+
+  for(
+    let i=period;
+    i<values.length;
+    i++
+  ){
+
+    ema =
+      (values[i]-ema) *
+      multiplier +
+      ema;
+
+  }
+
+  return ema;
+
+}
+
+
+/* =========================
+   RSI
+========================= */
+
+function calculateRSI(values,period=14){
+
+  if(values.length <= period){
+
+    return 50;
+
+  }
+
+  let gains = 0;
+  let losses = 0;
+
+  for(let i=1;i<=period;i++){
+
+    const change =
+      values[i]-values[i-1];
+
+    if(change >= 0){
+
+      gains += change;
+
+    }else{
+
+      losses += Math.abs(change);
+
+    }
+
+  }
+
+  let avgGain =
+    gains / period;
+
+  let avgLoss =
+    losses / period;
+
+  for(
+    let i=period+1;
+    i<values.length;
+    i++
+  ){
+
+    const change =
+      values[i]-values[i-1];
+
+    const gain =
+      change > 0 ? change : 0;
+
+    const loss =
+      change < 0 ? Math.abs(change) : 0;
+
+    avgGain =
+      ((avgGain*(period-1))+gain) /
+      period;
+
+    avgLoss =
+      ((avgLoss*(period-1))+loss) /
+      period;
+
+  }
+
+  if(avgLoss === 0){
+
+    return 100;
+
+  }
+
+  const rs =
+    avgGain / avgLoss;
+
+  return 100 -
+    (100/(1+rs));
+
+}
+
+
+/* =========================
+   SIGNAL ANALYSIS
+========================= */
+
+function analyzeCandles(candles){
+
+  const closes =
+    candles.map(c => Number(c.close));
+
+  const ema9 =
+    calculateEMA(closes,9);
+
+  const ema21 =
+    calculateEMA(closes,21);
+
+  const rsi =
+    calculateRSI(closes,14);
+
+  const last =
+    candles[candles.length-1];
+
+  const open =
+    Number(last.open);
+
+  const close =
+    Number(last.close);
+
+  let buyScore = 0;
+  let sellScore = 0;
+
+  /* EMA TREND */
+
+  if(ema9 > ema21){
+
+    buyScore += 2;
+
+  }else{
+
+    sellScore += 2;
+
+  }
+
+
+  /* RSI */
+
+  if(rsi > 50 && rsi < 70){
+
+    buyScore += 1;
+
+  }
+
+  if(rsi < 50 && rsi > 30){
+
+    sellScore += 1;
+
+  }
+
+
+  /* CANDLE DIRECTION */
+
+  if(close > open){
+
+    buyScore += 1;
+
+  }else if(close < open){
+
+    sellScore += 1;
+
+  }
+
+
+  /* STRONG RSI EXTREMES */
+
+  if(rsi < 30){
+
+    buyScore += 1;
+
+  }
+
+  if(rsi > 70){
+
+    sellScore += 1;
+
+  }
+
+
+  const total =
+    buyScore + sellScore;
+
+
+  if(total === 0){
+
+    return {
+      side:"WAIT",
+      confidence:0,
+      price:close,
+      rsi,
+      ema9,
+      ema21
+    };
+
+  }
+
+
+  const side =
+    buyScore >= sellScore
+      ? "BUY"
+      : "SELL";
+
+
+  const confidence =
+    Math.round(
+      Math.max(
+        buyScore,
+        sellScore
+      ) / total * 100
+    );
+
+
+  return {
+
+    side,
+    confidence,
+    price:close,
+    rsi,
+    ema9,
+    ema21
+
+  };
+
+}
+
+
+/* =========================
+   GENERATE SIGNAL
+========================= */
+
+async function generateSignal(){
+
+  if(!selectedPair){
+
+    alert("Pehle pair select karo.");
+
+    return;
+
+  }
+
+
+  beep(500,80);
+
+  const signal =
+    document.getElementById("signal");
+
+  const status =
+    document.getElementById("signalStatus");
+
+  const scanText =
+    document.getElementById("scanText");
+
+
+  signal.className =
+    "signal loading";
+
+  signal.innerText =
+    "SCANNING";
+
+  scanText.innerText =
+    "SCANNING";
+
+  status.innerText =
+    "Getting real market candles...";
+
+
+  try{
+
+    const data =
+      await getMarketData(selectedPair);
+
+
+    status.innerText =
+      "Analyzing RSI + EMA + candle trend...";
+
+
+    await new Promise(
+      resolve => setTimeout(resolve,700)
+    );
+
+
+    const result =
+      analyzeCandles(data.candles);
+
+
+    scanText.innerText =
+      result.side;
+
+
+    signal.classList.remove("loading");
+
+    signal.innerText =
+      result.side;
+
+
+    signal.classList.remove("buy");
+    signal.classList.remove("sell");
+
+
+    if(result.side === "BUY"){
+
+      signal.classList.add("buy");
+
+      beep(1000,180);
+
+    }else if(result.side === "SELL"){
+
+      signal.classList.add("sell");
+
+      beep(350,180);
+
+    }
+
+
+    document.getElementById("rPair").innerText =
+      selectedPair;
+
+    document.getElementById("rPrice").innerText =
+      Number(result.price).toFixed(5);
+
+    document.getElementById("rRsi").innerText =
+      Number(result.rsi).toFixed(2);
+
+    document.getElementById("rConfidence").innerText =
+      result.confidence + "%";
+
+    document.getElementById("rEma9").innerText =
+      Number(result.ema9).toFixed(5);
+
+    document.getElementById("rEma21").innerText =
+      Number(result.ema21).toFixed(5);
+
+
+    status.innerText =
+      "Real market data analyzed ✓";
+
+
+    addHistory(result);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    signal.className =
+      "signal error";
+
+    signal.innerText =
+      "ERROR";
+
+    scanText.innerText =
+      "ERROR";
+
+    status.innerText =
+      "Market data connect nahi ho saka.";
+
+  }
+
+}
+
+
+/* =========================
    HISTORY
-============================== */
+========================= */
 
-function addHistory(
-  pair,
-  signal,
-  confidence,
-  time
-){
+function addHistory(result){
 
-  const history =
-    document.getElementById(
-      "history"
-    );
+  history.unshift({
 
-  const item =
-    document.createElement("div");
+    time:
+      new Date().toLocaleTimeString(),
 
-  item.className=
-    "historyItem";
+    pair:
+      selectedPair,
 
-  item.innerHTML=
-    "<span>"+
-      "<b>"+pair+"</b><br>"+
-      time+
-    "</span>"+
-    "<span>"+
-      signal+"<br>"+
-      confidence+"%"+
-    "</span>";
+    side:
+      result.side,
 
-  history.prepend(item);
+    confidence:
+      result.confidence,
 
-}
+    price:
+      result.price
+
+  });
 
 
-/* ==============================
-   AI POPUP
-============================== */
+  if(history.length > 20){
 
-function closeAIPopup(){
+    history =
+      history.slice(0,20);
 
-  sound();
+  }
 
-  document
-    .getElementById("aiPopup")
-    .classList.remove("show");
+
+  renderHistory();
 
 }
 
 
-function startAI(){
+function renderHistory(){
 
-  sound("success");
+  const box =
+    document.getElementById("historyList");
 
-  document
-    .getElementById("aiPopup")
-    .classList.remove("show");
-
-  document
-    .getElementById("aiChat")
-    .classList.add("show");
-
-}
+  box.innerHTML = "";
 
 
-function openAI(){
+  history.forEach(item => {
 
-  sound();
-
-  document
-    .getElementById("aiChat")
-    .classList.add("show");
-
-}
-
-
-function closeAI(){
-
-  sound();
-
-  document
-    .getElementById("aiChat")
-    .classList.remove("show");
-
-}
-
-
-/* ==============================
-   AI DEMO CHAT
-============================== */
-
-function askAI(){
-
-  const input =
-    document.getElementById(
-      "aiQuestion"
-    );
-
-  const question =
-    input.value.trim();
-
-  if(!question) return;
-
-  const messages =
-    document.getElementById(
-      "aiMessages"
-    );
-
-  const user =
-    document.createElement("div");
-
-  user.className=
-    "msg userMsg";
-
-  user.innerText=
-    question;
-
-  messages.appendChild(user);
-
-  input.value="";
-
-  setTimeout(()=>{
-
-    const answer =
+    const div =
       document.createElement("div");
 
-    answer.className=
-      "msg aiMsg";
+    div.className =
+      "historyItem";
 
-    answer.innerText=
-      "🤖 Demo AI: Aapka question "+
-      "receive ho gaya. Real AI assistant "+
-      "connect karne ke liye backend/API "+
-      "next step mein add ki jayegi.";
+    const color =
+      item.side === "BUY"
+        ? "#00ff8c"
+        : "#ff4055";
 
-    messages.appendChild(answer);
 
-    messages.scrollTop=
-      messages.scrollHeight;
+    div.innerHTML = `
+      <b style="color:${color}">
+        ${item.side}
+      </b>
+      • ${item.pair}
+      • ${item.confidence}%
+      <br>
+      <small>
+        Price: ${Number(item.price).toFixed(5)}
+        • ${item.time}
+      </small>
+    `;
 
-  },500);
+    box.appendChild(div);
+
+  });
 
 }
 
 
-/* ==============================
-   INITIAL PAIRS
-============================== */
+/* =========================
+   AI PANEL
+========================= */
+
+function toggleAI(){
+
+  document
+    .getElementById("aiPanel")
+    .classList.toggle("show");
+
+  beep(650,80);
+
+}
+
+
+function sendAI(){
+
+  const input =
+    document.getElementById("aiInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+
+  const messages =
+    document.getElementById("aiMessages");
+
+
+  const userMsg =
+    document.createElement("div");
+
+  userMsg.className =
+    "msg";
+
+  userMsg.innerText =
+    "You: " + text;
+
+  messages.appendChild(userMsg);
+
+
+  const botMsg =
+    document.createElement("div");
+
+  botMsg.className =
+    "msg";
+
+  botMsg.innerText =
+    "AI backend abhi connect nahi hua. Market-data system working hai. Real AI ke liye secure server-side AI API connect karni hogi.";
+
+  messages.appendChild(botMsg);
+
+
+  input.value = "";
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
+/* =========================
+   START
+========================= */
 
 renderPairs(pairs);
 
 </script>
 
 </body>
-</html>
+                           </html>
