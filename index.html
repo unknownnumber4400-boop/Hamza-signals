@@ -10,392 +10,509 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial,sans-serif;
 }
 
 body{
   min-height:100vh;
   background:
-    radial-gradient(circle at center,#071d3b 0%,#020711 45%,#000 100%);
-  color:white;
+    radial-gradient(circle at 20% 10%,#07345f 0%,transparent 30%),
+    radial-gradient(circle at 90% 90%,#001d40 0%,transparent 30%),
+    #02050a;
+  color:#fff;
   overflow-x:hidden;
 }
 
-body:before{
+body::before{
   content:"";
   position:fixed;
-  width:500px;
-  height:500px;
-  border-radius:50%;
-  background:#008cff;
-  filter:blur(180px);
+  inset:0;
+  background-image:radial-gradient(#168cff 1px,transparent 1px);
+  background-size:35px 35px;
   opacity:.12;
-  left:50%;
-  top:45%;
-  transform:translate(-50%,-50%);
+  animation:dotsMove 15s linear infinite;
   pointer-events:none;
 }
 
-.screen{
-  min-height:100vh;
-  display:none;
-  padding:25px 18px;
+@keyframes dotsMove{
+  from{background-position:0 0}
+  to{background-position:350px 350px}
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:18px;
   position:relative;
   z-index:2;
 }
 
-.screen.active{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
 .logo{
-  margin-top:15px;
-  font-size:27px;
-  font-weight:900;
-  letter-spacing:3px;
-  color:#4db8ff;
-  text-shadow:0 0 15px #008cff;
-}
-
-.subtitle{
-  margin-top:8px;
-  color:#9bb8d5;
-  font-size:13px;
   text-align:center;
-}
-
-.orb{
-  width:230px;
-  height:230px;
-  border-radius:50%;
-  margin:45px auto 35px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  position:relative;
-  background:
-    radial-gradient(circle at 35% 30%,#74d0ff,#087be0 25%,#032451 58%,#010711 78%);
-  box-shadow:
-    0 0 25px #008cff,
-    0 0 70px #006eff,
-    inset 0 0 35px #00aaff;
-  animation:orb 3s ease-in-out infinite;
-}
-
-.orb:before,
-.orb:after{
-  content:"";
-  position:absolute;
-  inset:-15px;
-  border:2px solid #168cff;
-  border-radius:50%;
-  opacity:.55;
-  animation:spin 6s linear infinite;
-}
-
-.orb:after{
-  inset:-30px;
-  border-color:#00d9ff;
-  opacity:.2;
-  animation-duration:9s;
-  animation-direction:reverse;
-}
-
-.orbText{
-  font-size:20px;
+  font-size:28px;
   font-weight:900;
   letter-spacing:2px;
-  text-shadow:0 0 12px #fff;
-  z-index:3;
+  margin:15px 0 25px;
+  color:#fff;
+  text-shadow:
+    0 0 8px #008cff,
+    0 0 25px #008cff;
 }
 
-.dots{
-  position:absolute;
-  inset:-50px;
-  border-radius:50%;
-  animation:spin 10s linear infinite;
-}
-
-.dots span{
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:#00bfff;
-  box-shadow:0 0 10px #00bfff;
-}
-
-.dots span:nth-child(1){top:10%;left:50%}
-.dots span:nth-child(2){top:30%;right:3%}
-.dots span:nth-child(3){bottom:15%;right:18%}
-.dots span:nth-child(4){bottom:5%;left:45%}
-.dots span:nth-child(5){bottom:25%;left:4%}
-.dots span:nth-child(6){top:25%;left:5%}
-
-@keyframes orb{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.035)}
-}
-
-@keyframes spin{
-  from{transform:rotate(0)}
-  to{transform:rotate(360deg)}
-}
-
-.box{
-  width:100%;
-  max-width:430px;
-  background:rgba(7,18,34,.72);
-  border:1px solid rgba(0,153,255,.35);
+.card{
+  background:rgba(4,15,29,.78);
+  border:1px solid rgba(0,145,255,.45);
   border-radius:22px;
   padding:20px;
-  box-shadow:0 0 30px rgba(0,120,255,.12);
+  margin-bottom:16px;
   backdrop-filter:blur(15px);
+  box-shadow:
+    0 0 22px rgba(0,130,255,.14),
+    inset 0 0 20px rgba(0,100,255,.04);
+}
+
+.title{
+  font-size:18px;
+  font-weight:bold;
+  color:#69c7ff;
+  margin-bottom:14px;
+}
+
+.hidden{
+  display:none!important;
 }
 
 input,
-button{
+select{
   width:100%;
-  border-radius:14px;
-  padding:15px;
-  margin-top:12px;
-  font-size:15px;
-}
-
-input{
-  color:white;
-  background:#020a14;
-  border:1px solid #164a78;
+  padding:14px;
+  margin:7px 0;
+  border-radius:12px;
+  border:1px solid #1769a8;
+  background:#06111f;
+  color:#fff;
   outline:none;
 }
 
 input:focus{
   border-color:#00aaff;
-  box-shadow:0 0 15px #008cff55;
+  box-shadow:0 0 12px rgba(0,170,255,.3);
 }
 
 button{
-  border:1px solid #008cff;
-  background:linear-gradient(90deg,#0066ff,#00aaff);
-  color:white;
-  font-weight:800;
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:0;
+  border-radius:13px;
+  color:#fff;
+  font-weight:bold;
+  font-size:15px;
+  background:linear-gradient(90deg,#006eff,#00b7ff);
+  box-shadow:0 0 18px rgba(0,140,255,.35);
   cursor:pointer;
-  box-shadow:0 0 18px #008cff55;
 }
 
 button:active{
   transform:scale(.98);
 }
 
-.optionGrid{
-  width:100%;
-  max-width:500px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:15px;
-}
-
-.option{
-  padding:18px 10px;
-  border-radius:17px;
-  text-align:center;
-  background:rgba(5,17,32,.75);
-  border:1px solid #16466d;
-  cursor:pointer;
-  transition:.2s;
-  font-weight:800;
-}
-
-.option:hover,
-.option.selected{
-  border-color:#00aaff;
-  box-shadow:0 0 18px #008cff66;
-  background:rgba(0,94,170,.2);
-}
-
-.search{
-  max-width:500px;
-  margin-top:15px;
-}
-
-.pairList{
-  width:100%;
-  max-width:500px;
-  max-height:410px;
-  overflow-y:auto;
-  margin-top:12px;
-  padding-right:3px;
-}
-
-.pair{
-  padding:15px;
-  margin-bottom:9px;
-  border-radius:13px;
-  border:1px solid #173d60;
-  background:rgba(4,15,28,.8);
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-}
-
-.pair:hover{
-  border-color:#00aaff;
-  box-shadow:0 0 12px #008cff44;
-}
-
-.back{
-  max-width:500px;
-  background:#07182a;
-  border-color:#245174;
-  margin-top:20px;
+.login{
+  margin-top:45px;
 }
 
 .status{
-  margin-top:15px;
-  color:#8db5d5;
   text-align:center;
-  font-size:13px;
+  color:#7fcfff;
+  font-size:12px;
+  margin-top:9px;
 }
 
-.resultCard{
-  width:100%;
-  max-width:500px;
-  margin-top:20px;
-  padding:25px;
-  border-radius:24px;
-  background:rgba(4,16,29,.85);
-  border:1px solid #1466a0;
-  box-shadow:0 0 35px #008cff22;
-  text-align:center;
-}
-
-.signal{
-  font-size:50px;
-  font-weight:1000;
-  margin:15px 0;
-  text-shadow:0 0 25px currentColor;
-}
-
-.buy{color:#00ff8c}
-.sell{color:#ff4055}
-
-.info{
+.broker-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:18px;
 }
 
-.infoBox{
-  padding:13px;
-  border-radius:12px;
-  background:#061322;
-  border:1px solid #153d5d;
+.broker{
+  background:#06111f;
+  border:1px solid #155889;
 }
 
-.infoBox small{
-  display:block;
-  color:#7294ae;
-  margin-bottom:5px;
+.broker.active{
+  background:linear-gradient(135deg,#005eff,#00aaff);
+  box-shadow:0 0 20px #008cff;
 }
 
-.history{
-  width:100%;
-  max-width:500px;
-  margin-top:20px;
+.time-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
-.history h3{
-  margin-bottom:10px;
+.time-btn{
+  background:#06111f;
+  border:1px solid #155889;
+  font-size:12px;
 }
 
-.historyItem{
-  padding:12px;
-  border-radius:12px;
-  background:#061322;
-  border:1px solid #163a59;
+.time-btn.active{
+  background:#007cff;
+  box-shadow:0 0 15px #007cff;
+}
+
+.search{
   margin-bottom:8px;
+}
+
+.pairs{
+  max-height:300px;
+  overflow-y:auto;
+}
+
+.pair{
+  padding:13px;
+  margin:7px 0;
+  background:#06111f;
+  border:1px solid #123c5d;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.pair.active{
+  border-color:#00aaff;
+  box-shadow:0 0 12px rgba(0,170,255,.35);
+}
+
+/* =========================
+   SCANNING ORB
+========================= */
+
+.orb-area{
+  width:100%;
+  height:330px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+.orb{
+  width:185px;
+  height:185px;
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  z-index:3;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #104d7c 0%,
+      #06233f 38%,
+      #020b15 72%,
+      #010408 100%
+    );
+
+  border:2px solid #00aaff;
+
+  box-shadow:
+    0 0 15px #008cff,
+    0 0 35px #008cff,
+    0 0 75px rgba(0,140,255,.45),
+    inset 0 0 35px rgba(0,140,255,.55);
+
+  animation:orbPulse 2s ease-in-out infinite;
+}
+
+.orb::before{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:#00d5ff;
+  border-right-color:#008cff;
+  border-bottom-color:#005eff;
+  animation:rotateClockwise 1.7s linear infinite;
+  box-shadow:
+    0 0 10px #008cff,
+    0 0 20px rgba(0,140,255,.6);
+}
+
+.orb::after{
+  content:"";
+  position:absolute;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  border:2px dashed rgba(0,174,255,.85);
+  animation:rotateReverse 4.5s linear infinite;
+  box-shadow:0 0 15px rgba(0,140,255,.5);
+}
+
+@keyframes rotateClockwise{
+  from{
+    transform:rotate(0deg);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes rotateReverse{
+  from{
+    transform:rotate(360deg);
+  }
+  to{
+    transform:rotate(0deg);
+  }
+}
+
+@keyframes orbPulse{
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.035);
+  }
+}
+
+.orb-main{
+  position:relative;
+  z-index:5;
+  font-size:23px;
+  font-weight:900;
+  color:#fff;
+  text-shadow:
+    0 0 8px #00aaff,
+    0 0 18px #008cff;
+}
+
+.orb-sub{
+  position:relative;
+  z-index:5;
+  margin-top:8px;
+  color:#72d5ff;
   font-size:13px;
 }
 
-.aiButton{
+.scan{
+  position:relative;
+  z-index:5;
+  margin-top:10px;
+  color:#00d5ff;
+  font-size:12px;
+  animation:scanBlink .8s infinite;
+}
+
+@keyframes scanBlink{
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.3;
+  }
+}
+
+/* =========================
+   SIGNAL
+========================= */
+
+.signal{
+  text-align:center;
+}
+
+.signal-direction{
+  font-size:45px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.buy{
+  color:#00ff8c;
+  text-shadow:0 0 20px #00ff8c;
+}
+
+.sell{
+  color:#ff3d5a;
+  text-shadow:0 0 20px #ff3d5a;
+}
+
+.signal-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:15px;
+}
+
+.info{
+  background:#06111f;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #123c5d;
+}
+
+.info small{
+  display:block;
+  color:#7694aa;
+  margin-bottom:4px;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-item{
+  background:#06111f;
+  border-radius:12px;
+  padding:12px;
+  margin:8px 0;
+  border-left:3px solid #008cff;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+   AI
+========================= */
+
+.ai-float{
   position:fixed;
   right:18px;
   bottom:18px;
   width:58px;
   height:58px;
   border-radius:50%;
-  z-index:50;
+  background:linear-gradient(135deg,#006eff,#00c6ff);
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:24px;
-  background:#087cff;
-  box-shadow:0 0 25px #008cff;
-  border:2px solid #70ceff;
+  font-size:25px;
+  box-shadow:
+    0 0 15px #008cff,
+    0 0 30px rgba(0,140,255,.55);
+  z-index:20;
   cursor:pointer;
 }
 
-.aiPanel{
+.ai-panel{
   position:fixed;
   right:15px;
   bottom:85px;
   width:calc(100% - 30px);
-  max-width:370px;
-  background:#061323;
-  border:1px solid #168cff;
+  max-width:400px;
+  height:480px;
+  background:rgba(3,12,24,.97);
+  border:1px solid #008cff;
   border-radius:20px;
-  padding:18px;
-  z-index:49;
+  z-index:19;
+  box-shadow:0 0 30px rgba(0,140,255,.4);
+  padding:15px;
   display:none;
-  box-shadow:0 0 30px #008cff55;
+  flex-direction:column;
 }
 
-.aiPanel.show{
-  display:block;
+.ai-panel.show{
+  display:flex;
 }
 
-.aiMessages{
-  height:180px;
-  overflow-y:auto;
-  padding:8px;
-  background:#020914;
-  border-radius:12px;
+.ai-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   margin-bottom:10px;
 }
 
+.ai-header button{
+  width:45px;
+  margin:0;
+  padding:8px;
+}
+
+.ai-messages{
+  flex:1;
+  overflow-y:auto;
+  background:#020812;
+  border-radius:12px;
+  padding:10px;
+}
+
 .msg{
-  padding:9px;
-  margin-bottom:7px;
+  background:#071827;
+  border:1px solid #123c5d;
+  padding:10px;
   border-radius:10px;
-  background:#0b2843;
+  margin:7px 0;
   font-size:13px;
+  line-height:1.5;
 }
 
-.loading{
-  animation:pulse 1s infinite;
+.ai-input-row{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
 }
 
-@keyframes pulse{
-  50%{opacity:.45}
+.ai-input-row input{
+  margin:0;
 }
 
-.error{
-  color:#ff6675;
+.ai-input-row button{
+  width:80px;
+  margin:0;
 }
 
-@media(max-width:420px){
-  .orb{
-    width:205px;
-    height:205px;
+.logout{
+  background:linear-gradient(90deg,#a90028,#ff1744);
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+#welcome{
+  text-align:center;
+  line-height:1.7;
+}
+
+.yesno{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.no{
+  background:#182432;
+}
+
+@media(max-width:380px){
+
+  .time-buttons{
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .logo{
-    font-size:23px;
+  .orb{
+    width:165px;
+    height:165px;
+  }
+
+  .orb::before{
+    width:200px;
+    height:200px;
+  }
+
+  .orb::after{
+    width:225px;
+    height:225px;
   }
 }
 </style>
@@ -403,24 +520,14 @@ button:active{
 
 <body>
 
-<!-- LOGIN -->
-<section id="loginScreen" class="screen active">
+<div class="container">
 
-  <div class="logo">HAMZA'S SIGNALS</div>
-  <div class="subtitle">AI POWERED TRADING SIGNALS</div>
+  <!-- LOGIN -->
+  <section id="loginScreen" class="card login">
 
-  <div class="orb">
-    <div class="dots">
-      <span></span><span></span><span></span>
-      <span></span><span></span><span></span>
-    </div>
+    <div class="logo">HAMZA'S SIGNALS</div>
 
-    <div class="orbText">
-      MARKET<br>SCANNING
-    </div>
-  </div>
-
-  <div class="box">
+    <div class="title">🔐 Secure Login</div>
 
     <input
       id="username"
@@ -435,222 +542,246 @@ button:active{
       placeholder="Password"
     >
 
-    <button onclick="login()">
-      LOGIN
-    </button>
+    <button onclick="login()">LOGIN</button>
 
     <div id="loginStatus" class="status"></div>
 
-  </div>
-</section>
+  </section>
 
 
-<!-- BROKER -->
-<section id="brokerScreen" class="screen">
+  <!-- MAIN APP -->
+  <section id="app" class="hidden">
 
-  <div class="logo">SELECT BROKER</div>
-
-  <div class="orb">
-    <div class="dots">
-      <span></span><span></span><span></span>
-      <span></span><span></span><span></span>
-    </div>
-
-    <div class="orbText">
-      SELECT<br>BROKER
-    </div>
-  </div>
-
-  <div class="optionGrid">
-
-    <div class="option" onclick="selectBroker('Quotex',this)">
-      🟢 QUOTEX
-    </div>
-
-    <div class="option" onclick="selectBroker('Tradowix',this)">
-      🔵 TRADOWIX
-    </div>
-
-  </div>
-
-</section>
+    <div class="logo">HAMZA'S SIGNALS</div>
 
 
-<!-- TIMEFRAME -->
-<section id="timeframeScreen" class="screen">
+    <!-- AI WELCOME -->
+    <div id="welcome" class="card">
 
-  <div class="logo">SELECT TIMEFRAME</div>
+      <div class="title">🤖 AI Assistant</div>
 
-  <div class="orb">
+      <p>
+        Kya aap AI se baat karna ya koi question poochna chahte hain?
+      </p>
 
-    <div class="dots">
-      <span></span><span></span><span></span>
-      <span></span><span></span><span></span>
-    </div>
+      <div class="yesno">
 
-    <div id="timeOrb" class="orbText">
-      SELECT<br>TIME
-    </div>
+        <button onclick="openAI()">
+          YES
+        </button>
 
-  </div>
+        <button class="no" onclick="closeWelcome()">
+          NO
+        </button>
 
-  <div class="optionGrid">
-
-    <div class="option" onclick="selectTime('5 SEC',this)">5 SEC</div>
-    <div class="option" onclick="selectTime('15 SEC',this)">15 SEC</div>
-    <div class="option" onclick="selectTime('30 SEC',this)">30 SEC</div>
-    <div class="option" onclick="selectTime('1 MIN',this)">1 MIN</div>
-    <div class="option" onclick="selectTime('2 MIN',this)">2 MIN</div>
-    <div class="option" onclick="selectTime('5 MIN',this)">5 MIN</div>
-
-  </div>
-
-  <button class="back" onclick="showScreen('brokerScreen')">
-    ← BACK
-  </button>
-
-</section>
-
-
-<!-- PAIR -->
-<section id="pairScreen" class="screen">
-
-  <div class="logo">SELECT PAIR</div>
-
-  <div class="subtitle">
-    Choose a currency or asset
-  </div>
-
-  <input
-    id="pairSearch"
-    class="search"
-    placeholder="🔎 Search pair..."
-    oninput="filterPairs()"
-  >
-
-  <div id="pairList" class="pairList"></div>
-
-  <button class="back" onclick="showScreen('timeframeScreen')">
-    ← BACK
-  </button>
-
-</section>
-
-
-<!-- RESULT -->
-<section id="resultScreen" class="screen">
-
-  <div class="logo">HAMZA'S SIGNALS</div>
-
-  <div class="subtitle">
-    REAL MARKET ANALYSIS
-  </div>
-
-  <div id="scanOrb" class="orb">
-
-    <div class="dots">
-      <span></span><span></span><span></span>
-      <span></span><span></span><span></span>
-    </div>
-
-    <div id="scanText" class="orbText">
-      READY
-    </div>
-
-  </div>
-
-  <div class="resultCard">
-
-    <div id="selectedInfo" class="subtitle"></div>
-
-    <div id="signal" class="signal">
-      READY
-    </div>
-
-    <div id="signalStatus" class="status">
-      Press Generate Signal
-    </div>
-
-    <div class="info">
-
-      <div class="infoBox">
-        <small>PAIR</small>
-        <b id="rPair">-</b>
-      </div>
-
-      <div class="infoBox">
-        <small>PRICE</small>
-        <b id="rPrice">-</b>
-      </div>
-
-      <div class="infoBox">
-        <small>RSI</small>
-        <b id="rRsi">-</b>
-      </div>
-
-      <div class="infoBox">
-        <small>CONFIDENCE</small>
-        <b id="rConfidence">-</b>
-      </div>
-
-      <div class="infoBox">
-        <small>EMA 9</small>
-        <b id="rEma9">-</b>
-      </div>
-
-      <div class="infoBox">
-        <small>EMA 21</small>
-        <b id="rEma21">-</b>
       </div>
 
     </div>
 
-    <button onclick="generateSignal()">
-      ⚡ GENERATE SIGNAL
+
+    <!-- BROKER -->
+    <div class="card">
+
+      <div class="title">🏦 Select Broker</div>
+
+      <div class="broker-buttons">
+
+        <button
+          id="quotex"
+          class="broker active"
+          onclick="selectBroker('Quotex')">
+          QUOTEX
+        </button>
+
+        <button
+          id="tradowix"
+          class="broker"
+          onclick="selectBroker('Tradowix')">
+          TRADOWIX
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- TIMEFRAME -->
+    <div class="card">
+
+      <div class="title">⏱ Select Timeframe</div>
+
+      <div class="time-buttons">
+
+        <button
+          class="time-btn"
+          onclick="selectTime('5 SEC',this)">
+          5 SEC
+        </button>
+
+        <button
+          class="time-btn"
+          onclick="selectTime('15 SEC',this)">
+          15 SEC
+        </button>
+
+        <button
+          class="time-btn"
+          onclick="selectTime('30 SEC',this)">
+          30 SEC
+        </button>
+
+        <button
+          class="time-btn active"
+          onclick="selectTime('1 MIN',this)">
+          1 MIN
+        </button>
+
+        <button
+          class="time-btn"
+          onclick="selectTime('2 MIN',this)">
+          2 MIN
+        </button>
+
+        <button
+          class="time-btn"
+          onclick="selectTime('5 MIN',this)">
+          5 MIN
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PAIRS -->
+    <div class="card">
+
+      <div class="title">💱 Select Currency Pair</div>
+
+      <input
+        id="pairSearch"
+        class="search"
+        type="text"
+        placeholder="Search pair..."
+        oninput="filterPairs()"
+      >
+
+      <div id="pairs" class="pairs"></div>
+
+    </div>
+
+
+    <!-- SCANNER -->
+    <div class="card">
+
+      <div class="title">📡 AI Market Scanner</div>
+
+      <div class="orb-area">
+
+        <div class="orb">
+
+          <div id="orbPair" class="orb-main">
+            EUR/USD
+          </div>
+
+          <div id="orbTime" class="orb-sub">
+            1 MIN
+          </div>
+
+          <div id="scanText" class="scan">
+            READY TO SCAN
+          </div>
+
+        </div>
+
+      </div>
+
+      <button onclick="generateSignal()">
+        ⚡ GENERATE SIGNAL
+      </button>
+
+      <div id="marketStatus" class="status">
+        Market data ready
+      </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+    <div id="resultCard" class="card hidden">
+
+      <div class="title">🎯 SIGNAL RESULT</div>
+
+      <div id="signalResult" class="signal"></div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+    <div class="card">
+
+      <div class="title">📜 Signal History</div>
+
+      <div id="history">
+
+        <div class="status">
+          No signals yet
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button class="logout" onclick="logout()">
+      LOGOUT
     </button>
 
-    <button class="back" onclick="showScreen('pairScreen')">
-      ← CHANGE PAIR
-    </button>
+  </section>
 
-  </div>
-
-  <div class="history">
-
-    <h3>📜 SIGNAL HISTORY</h3>
-
-    <div id="historyList"></div>
-
-  </div>
-
-</section>
+</div>
 
 
-<!-- AI -->
-<div id="aiButton" class="aiButton" onclick="toggleAI()">
+<!-- AI FLOATING BUTTON -->
+<div class="ai-float" onclick="toggleAI()">
   🤖
 </div>
 
-<div id="aiPanel" class="aiPanel">
 
-  <h3>🤖 HAMZA AI</h3>
+<!-- AI PANEL -->
+<div id="aiPanel" class="ai-panel">
 
-  <div id="aiMessages" class="aiMessages">
+  <div class="ai-header">
+
+    <strong>🤖 HAMZA AI</strong>
+
+    <button onclick="toggleAI()">✕</button>
+
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
 
     <div class="msg">
-      Kya aap AI se baat karna ya koi question poochna chahte hain?
+      AI: Assalam-o-Alaikum! Main HAMZA'S SIGNALS AI hoon.
+      Aap mujhse question pooch sakte hain.
     </div>
 
   </div>
 
-  <input
-    id="aiInput"
-    placeholder="Ask something..."
-  >
+  <div class="ai-input-row">
 
-  <button onclick="sendAI()">
-    SEND
-  </button>
+    <input
+      id="aiInput"
+      type="text"
+      placeholder="Ask AI..."
+      onkeydown="if(event.key==='Enter')sendAI()"
+    >
+
+    <button onclick="sendAI()">
+      SEND
+    </button>
+
+  </div>
 
 </div>
 
@@ -658,7 +789,7 @@ button:active{
 <script>
 
 /* =========================
-   CONFIG
+   API
 ========================= */
 
 const MARKET_API =
@@ -666,14 +797,12 @@ const MARKET_API =
 
 
 /* =========================
-   APP STATE
+   VARIABLES
 ========================= */
 
-let selectedBroker = "";
-let selectedTime = "";
-let selectedPair = "";
-
-let history = [];
+let selectedBroker = "Quotex";
+let selectedTime = "1 MIN";
+let selectedPair = "EUR/USD";
 
 
 /* =========================
@@ -682,117 +811,54 @@ let history = [];
 
 const pairs = [
 
-"EUR/USD",
-"GBP/USD",
-"USD/JPY",
-"AUD/USD",
-"USD/CAD",
-"USD/CHF",
-"NZD/USD",
+  "EUR/USD",
+  "GBP/USD",
+  "USD/JPY",
+  "AUD/USD",
+  "USD/CAD",
+  "USD/CHF",
+  "NZD/USD",
 
-"EUR/GBP",
-"EUR/JPY",
-"EUR/CHF",
-"EUR/AUD",
-"EUR/CAD",
-"EUR/NZD",
+  "EUR/GBP",
+  "EUR/JPY",
+  "EUR/CHF",
+  "EUR/AUD",
+  "EUR/CAD",
+  "EUR/NZD",
 
-"GBP/JPY",
-"GBP/CHF",
-"GBP/AUD",
-"GBP/CAD",
-"GBP/NZD",
+  "GBP/JPY",
+  "GBP/CHF",
+  "GBP/AUD",
+  "GBP/CAD",
+  "GBP/NZD",
 
-"AUD/JPY",
-"AUD/CHF",
-"AUD/CAD",
-"AUD/NZD",
+  "AUD/JPY",
+  "AUD/CHF",
+  "AUD/CAD",
+  "AUD/NZD",
 
-"CAD/JPY",
-"CAD/CHF",
+  "CAD/JPY",
+  "CAD/CHF",
+  "CHF/JPY",
 
-"CHF/JPY",
+  "NZD/JPY",
+  "NZD/CHF",
+  "NZD/CAD",
 
-"NZD/JPY",
-"NZD/CHF",
-"NZD/CAD",
+  "USD/SGD",
+  "USD/HKD",
+  "USD/ZAR",
+  "USD/MXN",
+  "USD/TRY",
 
-"USD/SGD",
-"USD/HKD",
-"USD/ZAR",
-"USD/MXN",
-"USD/TRY",
+  "EUR/TRY",
+  "EUR/ZAR",
+  "GBP/ZAR",
 
-"EUR/TRY",
-"EUR/ZAR",
-
-"GBP/ZAR",
-
-"XAU/USD",
-"XAG/USD"
+  "XAU/USD",
+  "XAG/USD"
 
 ];
-
-
-/* =========================
-   SOUND
-========================= */
-
-function beep(frequency=600,duration=100){
-
-  try{
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    const ctx = new AudioContext();
-
-    const oscillator =
-      ctx.createOscillator();
-
-    const gain =
-      ctx.createGain();
-
-    oscillator.frequency.value =
-      frequency;
-
-    oscillator.type = "sine";
-
-    gain.gain.value = .06;
-
-    oscillator.connect(gain);
-    gain.connect(ctx.destination);
-
-    oscillator.start();
-
-    setTimeout(()=>{
-
-      oscillator.stop();
-      ctx.close();
-
-    },duration);
-
-  }catch(e){}
-
-}
-
-
-/* =========================
-   SCREEN
-========================= */
-
-function showScreen(id){
-
-  document
-    .querySelectorAll(".screen")
-    .forEach(s => s.classList.remove("active"));
-
-  document
-    .getElementById(id)
-    .classList.add("active");
-
-}
 
 
 /* =========================
@@ -807,27 +873,46 @@ function login(){
   const password =
     document.getElementById("password").value;
 
+  const status =
+    document.getElementById("loginStatus");
+
   if(username === "Hamza" && password === "Aliza"){
 
-    beep(900,120);
+    document
+      .getElementById("loginScreen")
+      .classList.add("hidden");
 
-    document.getElementById("loginStatus").innerText =
-      "Login successful ✓";
+    document
+      .getElementById("app")
+      .classList.remove("hidden");
 
-    setTimeout(()=>{
+    renderPairs();
 
-      showScreen("brokerScreen");
-
-    },500);
+    playBeep();
 
   }else{
 
-    beep(180,180);
-
-    document.getElementById("loginStatus").innerText =
-      "Wrong username or password";
+    status.innerText =
+      "❌ Wrong username or password";
 
   }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
 
 }
 
@@ -836,23 +921,33 @@ function login(){
    BROKER
 ========================= */
 
-function selectBroker(broker,element){
+function selectBroker(broker){
 
   selectedBroker = broker;
 
   document
-    .querySelectorAll("#brokerScreen .option")
-    .forEach(x => x.classList.remove("selected"));
+    .getElementById("quotex")
+    .classList.remove("active");
 
-  element.classList.add("selected");
+  document
+    .getElementById("tradowix")
+    .classList.remove("active");
 
-  beep(700,100);
+  if(broker === "Quotex"){
 
-  setTimeout(()=>{
+    document
+      .getElementById("quotex")
+      .classList.add("active");
 
-    showScreen("timeframeScreen");
+  }else{
 
-  },300);
+    document
+      .getElementById("tradowix")
+      .classList.add("active");
+
+  }
+
+  playBeep();
 
 }
 
@@ -866,51 +961,59 @@ function selectTime(time,element){
   selectedTime = time;
 
   document
-    .querySelectorAll("#timeframeScreen .option")
-    .forEach(x => x.classList.remove("selected"));
+    .getElementById("orbTime")
+    .innerText = time;
 
-  element.classList.add("selected");
+  document
+    .querySelectorAll(".time-btn")
+    .forEach(function(btn){
+      btn.classList.remove("active");
+    });
 
-  document.getElementById("timeOrb").innerHTML =
-    time.replace(" ","<br>");
+  element.classList.add("active");
 
-  beep(750,100);
-
-  setTimeout(()=>{
-
-    showScreen("pairScreen");
-
-    renderPairs(pairs);
-
-  },350);
+  playBeep();
 
 }
 
 
 /* =========================
-   PAIRS
+   PAIR RENDER
 ========================= */
 
-function renderPairs(list){
+function renderPairs(){
 
   const box =
-    document.getElementById("pairList");
+    document.getElementById("pairs");
 
   box.innerHTML = "";
 
-  list.forEach(pair => {
+  pairs.forEach(function(pair){
 
     const div =
       document.createElement("div");
 
     div.className = "pair";
 
-    div.innerHTML = `
-      <span>💱 ${pair}</span>
-      <span>›</span>
-    `;
+    if(pair === selectedPair){
+      div.classList.add("active");
+    }
 
-    div.onclick = () => selectPair(pair);
+    div.innerText = pair;
+
+    div.onclick = function(){
+
+      selectedPair = pair;
+
+      document
+        .getElementById("orbPair")
+        .innerText = pair;
+
+      renderPairs();
+
+      playBeep();
+
+    };
 
     box.appendChild(div);
 
@@ -919,83 +1022,100 @@ function renderPairs(list){
 }
 
 
+/* =========================
+   PAIR SEARCH
+========================= */
+
 function filterPairs(){
 
-  const q =
+  const query =
     document
       .getElementById("pairSearch")
       .value
-      .toUpperCase()
-      .trim();
+      .trim()
+      .toUpperCase();
 
-  const filtered =
-    pairs.filter(p =>
-      p.includes(q)
-    );
+  const box =
+    document.getElementById("pairs");
 
-  renderPairs(filtered);
+  box.innerHTML = "";
 
-}
+  pairs
+    .filter(function(pair){
+      return pair.includes(query);
+    })
+    .forEach(function(pair){
 
+      const div =
+        document.createElement("div");
 
-function selectPair(pair){
+      div.className = "pair";
 
-  selectedPair = pair;
+      if(pair === selectedPair){
+        div.classList.add("active");
+      }
 
-  beep(850,100);
+      div.innerText = pair;
 
-  document.getElementById("selectedInfo").innerText =
-    `${selectedBroker} • ${selectedTime} • ${selectedPair}`;
+      div.onclick = function(){
 
-  document.getElementById("rPair").innerText =
-    selectedPair;
+        selectedPair = pair;
 
-  document.getElementById("scanText").innerText =
-    "READY";
+        document
+          .getElementById("orbPair")
+          .innerText = pair;
 
-  showScreen("resultScreen");
+        renderPairs();
+
+        playBeep();
+
+      };
+
+      box.appendChild(div);
+
+    });
 
 }
 
 
 /* =========================
-   REAL MARKET DATA
+   MARKET DATA
 ========================= */
 
 async function getMarketData(symbol){
 
   const url =
-    `${MARKET_API}/market?symbol=${encodeURIComponent(symbol)}&interval=1min`;
+    MARKET_API +
+    "/market?symbol=" +
+    encodeURIComponent(symbol) +
+    "&interval=1min";
 
   const response =
-    await fetch(url, {
-      cache:"no-store"
-    });
+    await fetch(url);
 
   if(!response.ok){
-
-    throw new Error(
-      "Market API returned an error"
-    );
-
+    throw new Error("Market API error");
   }
 
   const data =
     await response.json();
 
-  if(
-    data.status !== "ok" ||
-    !Array.isArray(data.candles) ||
-    data.candles.length < 22
-  ){
-
+  if(data.status !== "ok"){
     throw new Error(
-      "Insufficient market candles"
+      data.error || "Market data unavailable"
     );
-
   }
 
-  return data;
+  if(
+    !data.candles ||
+    data.candles.length < 25
+  ){
+    throw new Error(
+      "Not enough market candles"
+    );
+  }
+
+  return data.candles;
 
 }
 
@@ -1006,34 +1126,29 @@ async function getMarketData(symbol){
 
 function calculateEMA(values,period){
 
-  if(values.length < period){
-
-    return values[values.length-1];
-
+  if(values.length === 0){
+    return 0;
   }
-
-  let ema =
-    values
-      .slice(0,period)
-      .reduce((a,b)=>a+b,0) / period;
 
   const multiplier =
     2 / (period + 1);
 
+  let emaValue =
+    values[0];
+
   for(
-    let i=period;
-    i<values.length;
+    let i = 1;
+    i < values.length;
     i++
   ){
 
-    ema =
-      (values[i]-ema) *
-      multiplier +
-      ema;
+    emaValue =
+      ((values[i] - emaValue) * multiplier)
+      + emaValue;
 
   }
 
-  return ema;
+  return emaValue;
 
 }
 
@@ -1042,48 +1157,46 @@ function calculateEMA(values,period){
    RSI
 ========================= */
 
-function calculateRSI(values,period=14){
+function calculateRSI(closes,period){
 
-  if(values.length <= period){
-
+  if(closes.length <= period){
     return 50;
-
   }
 
   let gains = 0;
   let losses = 0;
 
-  for(let i=1;i<=period;i++){
-
-    const change =
-      values[i]-values[i-1];
-
-    if(change >= 0){
-
-      gains += change;
-
-    }else{
-
-      losses += Math.abs(change);
-
-    }
-
-  }
-
-  let avgGain =
-    gains / period;
-
-  let avgLoss =
-    losses / period;
-
   for(
-    let i=period+1;
-    i<values.length;
+    let i = 1;
+    i <= period;
     i++
   ){
 
     const change =
-      values[i]-values[i-1];
+      closes[i] - closes[i-1];
+
+    if(change >= 0){
+      gains += change;
+    }else{
+      losses += Math.abs(change);
+    }
+
+  }
+
+  let averageGain =
+    gains / period;
+
+  let averageLoss =
+    losses / period;
+
+  for(
+    let i = period + 1;
+    i < closes.length;
+    i++
+  ){
+
+    const change =
+      closes[i] - closes[i-1];
 
     const gain =
       change > 0 ? change : 0;
@@ -1091,39 +1204,53 @@ function calculateRSI(values,period=14){
     const loss =
       change < 0 ? Math.abs(change) : 0;
 
-    avgGain =
-      ((avgGain*(period-1))+gain) /
-      period;
+    averageGain =
+      ((averageGain * (period - 1)) + gain)
+      / period;
 
-    avgLoss =
-      ((avgLoss*(period-1))+loss) /
-      period;
+    averageLoss =
+      ((averageLoss * (period - 1)) + loss)
+      / period;
 
   }
 
-  if(avgLoss === 0){
-
+  if(averageLoss === 0){
     return 100;
-
   }
 
-  const rs =
-    avgGain / avgLoss;
+  const relativeStrength =
+    averageGain / averageLoss;
 
   return 100 -
-    (100/(1+rs));
+    (100 / (1 + relativeStrength));
 
 }
 
 
 /* =========================
-   SIGNAL ANALYSIS
+   ANALYSIS
 ========================= */
 
 function analyzeCandles(candles){
 
   const closes =
-    candles.map(c => Number(c.close));
+    candles.map(function(c){
+      return Number(c.close);
+    });
+
+  const opens =
+    candles.map(function(c){
+      return Number(c.open);
+    });
+
+  const last =
+    closes[closes.length - 1];
+
+  const previous =
+    closes[closes.length - 2];
+
+  const lastOpen =
+    opens[opens.length - 1];
 
   const ema9 =
     calculateEMA(closes,9);
@@ -1134,116 +1261,109 @@ function analyzeCandles(candles){
   const rsi =
     calculateRSI(closes,14);
 
-  const last =
-    candles[candles.length-1];
-
-  const open =
-    Number(last.open);
-
-  const close =
-    Number(last.close);
-
   let buyScore = 0;
   let sellScore = 0;
+
 
   /* EMA TREND */
 
   if(ema9 > ema21){
+    buyScore += 30;
+  }
 
-    buyScore += 2;
+  if(ema9 < ema21){
+    sellScore += 30;
+  }
 
-  }else{
 
-    sellScore += 2;
+  /* PRICE */
 
+  if(last > ema9){
+    buyScore += 15;
+  }
+
+  if(last < ema9){
+    sellScore += 15;
   }
 
 
   /* RSI */
 
-  if(rsi > 50 && rsi < 70){
-
-    buyScore += 1;
-
+  if(rsi < 35){
+    buyScore += 20;
   }
 
-  if(rsi < 50 && rsi > 30){
-
-    sellScore += 1;
-
+  if(rsi > 65){
+    sellScore += 20;
   }
 
+  if(rsi >= 35 && rsi <= 65){
 
-  /* CANDLE DIRECTION */
-
-  if(close > open){
-
-    buyScore += 1;
-
-  }else if(close < open){
-
-    sellScore += 1;
+    if(ema9 > ema21){
+      buyScore += 10;
+    }else{
+      sellScore += 10;
+    }
 
   }
 
 
-  /* STRONG RSI EXTREMES */
+  /* LAST CANDLE */
 
-  if(rsi < 30){
-
-    buyScore += 1;
-
+  if(last > lastOpen){
+    buyScore += 15;
   }
 
-  if(rsi > 70){
-
-    sellScore += 1;
-
+  if(last < lastOpen){
+    sellScore += 15;
   }
 
 
-  const total =
-    buyScore + sellScore;
+  /* MOMENTUM */
 
+  if(last > previous){
+    buyScore += 10;
+  }
 
-  if(total === 0){
-
-    return {
-      side:"WAIT",
-      confidence:0,
-      price:close,
-      rsi,
-      ema9,
-      ema21
-    };
-
+  if(last < previous){
+    sellScore += 10;
   }
 
 
-  const side =
+  const direction =
     buyScore >= sellScore
       ? "BUY"
       : "SELL";
 
+  const score =
+    Math.max(
+      buyScore,
+      sellScore
+    );
 
   const confidence =
-    Math.round(
+    Math.min(
+      97,
       Math.max(
-        buyScore,
-        sellScore
-      ) / total * 100
+        51,
+        Math.round(score)
+      )
     );
+
+  const trend =
+    ema9 > ema21
+      ? "Bullish"
+      : "Bearish";
 
 
   return {
-
-    side,
-    confidence,
-    price:close,
-    rsi,
-    ema9,
-    ema21
-
+    direction:direction,
+    confidence:confidence,
+    price:last,
+    ema9:ema9,
+    ema21:ema21,
+    rsi:rsi,
+    trend:trend
   };
 
 }
@@ -1255,131 +1375,172 @@ function analyzeCandles(candles){
 
 async function generateSignal(){
 
-  if(!selectedPair){
-
-    alert("Pehle pair select karo.");
-
-    return;
-
-  }
-
-
-  beep(500,80);
-
-  const signal =
-    document.getElementById("signal");
-
-  const status =
-    document.getElementById("signalStatus");
-
-  const scanText =
+  const scan =
     document.getElementById("scanText");
 
+  const status =
+    document.getElementById("marketStatus");
 
-  signal.className =
-    "signal loading";
+  const resultCard =
+    document.getElementById("resultCard");
 
-  signal.innerText =
-    "SCANNING";
 
-  scanText.innerText =
-    "SCANNING";
+  scan.innerText =
+    "SCANNING MARKET...";
 
   status.innerText =
-    "Getting real market candles...";
+    "Fetching live market candles...";
+
+  resultCard.classList.add("hidden");
 
 
   try{
 
-    const data =
-      await getMarketData(selectedPair);
+    const candles =
+      await getMarketData(
+        selectedPair
+      );
 
 
-    status.innerText =
-      "Analyzing RSI + EMA + candle trend...";
+    scan.innerText =
+      "ANALYZING CANDLES...";
 
 
     await new Promise(
-      resolve => setTimeout(resolve,700)
+      function(resolve){
+        setTimeout(resolve,800);
+      }
     );
 
 
-    const result =
-      analyzeCandles(data.candles);
+    const analysis =
+      analyzeCandles(candles);
 
 
-    scanText.innerText =
-      result.side;
+    showSignal(analysis);
 
 
-    signal.classList.remove("loading");
-
-    signal.innerText =
-      result.side;
-
-
-    signal.classList.remove("buy");
-    signal.classList.remove("sell");
-
-
-    if(result.side === "BUY"){
-
-      signal.classList.add("buy");
-
-      beep(1000,180);
-
-    }else if(result.side === "SELL"){
-
-      signal.classList.add("sell");
-
-      beep(350,180);
-
-    }
-
-
-    document.getElementById("rPair").innerText =
-      selectedPair;
-
-    document.getElementById("rPrice").innerText =
-      Number(result.price).toFixed(5);
-
-    document.getElementById("rRsi").innerText =
-      Number(result.rsi).toFixed(2);
-
-    document.getElementById("rConfidence").innerText =
-      result.confidence + "%";
-
-    document.getElementById("rEma9").innerText =
-      Number(result.ema9).toFixed(5);
-
-    document.getElementById("rEma21").innerText =
-      Number(result.ema21).toFixed(5);
-
+    scan.innerText =
+      "SCAN COMPLETE ✓";
 
     status.innerText =
-      "Real market data analyzed ✓";
+      "Live market data loaded";
 
 
-    addHistory(result);
+    playBeep();
 
 
   }catch(error){
 
     console.error(error);
 
-    signal.className =
-      "signal error";
-
-    signal.innerText =
-      "ERROR";
-
-    scanText.innerText =
-      "ERROR";
+    scan.innerText =
+      "SCAN FAILED";
 
     status.innerText =
-      "Market data connect nahi ho saka.";
+      "❌ " + error.message;
 
   }
+
+}
+
+
+/* =========================
+   SHOW SIGNAL
+========================= */
+
+function showSignal(a){
+
+  const resultCard =
+    document.getElementById("resultCard");
+
+  const result =
+    document.getElementById("signalResult");
+
+  const isBuy =
+    a.direction === "BUY";
+
+  const directionClass =
+    isBuy ? "buy" : "sell";
+
+  const arrow =
+    isBuy ? "⬆ BUY" : "⬇ SELL";
+
+  const time =
+    new Date().toLocaleTimeString();
+
+
+  result.innerHTML =
+
+    '<div class="signal-direction ' +
+      directionClass +
+    '">' +
+      arrow +
+    '</div>' +
+
+    '<div class="signal-info">' +
+
+      '<div class="info">' +
+        '<small>PAIR</small>' +
+        selectedPair +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>BROKER</small>' +
+        selectedBroker +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>TIMEFRAME</small>' +
+        selectedTime +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>CONFIDENCE SCORE</small>' +
+        a.confidence +
+        '%' +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>PRICE</small>' +
+        Number(a.price).toFixed(5) +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>RSI</small>' +
+        Number(a.rsi).toFixed(2) +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>EMA 9</small>' +
+        Number(a.ema9).toFixed(5) +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>EMA 21</small>' +
+        Number(a.ema21).toFixed(5) +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>MARKET TREND</small>' +
+        a.trend +
+      '</div>' +
+
+      '<div class="info">' +
+        '<small>GENERATED</small>' +
+        time +
+      '</div>' +
+
+    '</div>' +
+
+    '<div class="status">' +
+      '⚠️ Confidence is an analysis score, not a guarantee of profit.' +
+    '</div>';
+
+
+  resultCard.classList.remove("hidden");
+
+  addHistory(a,time);
 
 }
 
@@ -1388,79 +1549,58 @@ async function generateSignal(){
    HISTORY
 ========================= */
 
-function addHistory(result){
+function addHistory(a,time){
 
-  history.unshift({
+  const history =
+    document.getElementById("history");
 
-    time:
-      new Date().toLocaleTimeString(),
+  const empty =
+    history.querySelector(".status");
 
-    pair:
-      selectedPair,
-
-    side:
-      result.side,
-
-    confidence:
-      result.confidence,
-
-    price:
-      result.price
-
-  });
-
-
-  if(history.length > 20){
-
-    history =
-      history.slice(0,20);
-
+  if(empty){
+    history.innerHTML = "";
   }
 
 
-  renderHistory();
+  const item =
+    document.createElement("div");
 
-}
-
-
-function renderHistory(){
-
-  const box =
-    document.getElementById("historyList");
-
-  box.innerHTML = "";
+  item.className =
+    "history-item";
 
 
-  history.forEach(item => {
+  item.innerHTML =
 
-    const div =
-      document.createElement("div");
+    '<strong>' +
+      (a.direction === "BUY"
+        ? "🟢 BUY"
+        : "🔴 SELL") +
+    '</strong>' +
 
-    div.className =
-      "historyItem";
+    ' — ' +
+    selectedPair +
 
-    const color =
-      item.side === "BUY"
-        ? "#00ff8c"
-        : "#ff4055";
+    '<br>' +
+
+    selectedBroker +
+    ' • ' +
+    selectedTime +
+
+    '<br>' +
+
+    'Confidence Score: ' +
+    a.confidence +
+    '%' +
+
+    '<br>' +
+
+    'RSI: ' +
+    Number(a.rsi).toFixed(2) +
+    ' • ' +
+    time;
 
 
-    div.innerHTML = `
-      <b style="color:${color}">
-        ${item.side}
-      </b>
-      • ${item.pair}
-      • ${item.confidence}%
-      <br>
-      <small>
-        Price: ${Number(item.price).toFixed(5)}
-        • ${item.time}
-      </small>
-    `;
-
-    box.appendChild(div);
-
-  });
+  history.prepend(item);
 
 }
 
@@ -1471,16 +1611,41 @@ function renderHistory(){
 
 function toggleAI(){
 
-  document
-    .getElementById("aiPanel")
-    .classList.toggle("show");
+  const panel =
+    document.getElementById("aiPanel");
 
-  beep(650,80);
+  panel.classList.toggle("show");
 
 }
 
 
-function sendAI(){
+function openAI(){
+
+  document
+    .getElementById("welcome")
+    .classList.add("hidden");
+
+  document
+    .getElementById("aiPanel")
+    .classList.add("show");
+
+}
+
+
+function closeWelcome(){
+
+  document
+    .getElementById("welcome")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================
+   REAL AI
+========================= */
+
+async function sendAI(){
 
   const input =
     document.getElementById("aiInput");
@@ -1488,7 +1653,9 @@ function sendAI(){
   const text =
     input.value.trim();
 
-  if(!text) return;
+  if(!text){
+    return;
+  }
 
 
   const messages =
@@ -1514,7 +1681,7 @@ function sendAI(){
     "msg";
 
   botMsg.innerText =
-    "AI backend abhi connect nahi hua. Market-data system working hai. Real AI ke liye secure server-side AI API connect karni hogi.";
+    "AI thinking...";
 
   messages.appendChild(botMsg);
 
@@ -1524,6 +1691,122 @@ function sendAI(){
   messages.scrollTop =
     messages.scrollHeight;
 
+
+  try{
+
+    const response =
+      await fetch(
+        MARKET_API + "/ai",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+            message:text
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      data.status !== "ok"
+    ){
+
+      throw new Error(
+        data.error ||
+        "AI request failed"
+      );
+
+    }
+
+
+    botMsg.innerText =
+      "AI: " +
+      data.answer;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    botMsg.innerText =
+      "AI error: " +
+      error.message;
+
+  }
+
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
+/* =========================
+   SOUND
+========================= */
+
+function playBeep(){
+
+  try{
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if(!AudioContext){
+      return;
+    }
+
+
+    const ctx =
+      new AudioContext();
+
+    const oscillator =
+      ctx.createOscillator();
+
+    const gain =
+      ctx.createGain();
+
+
+    oscillator.type =
+      "sine";
+
+    oscillator.frequency.value =
+      700;
+
+    gain.gain.value =
+      0.04;
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      ctx.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+      ctx.currentTime + 0.08
+    );
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
 }
 
 
@@ -1531,9 +1814,24 @@ function sendAI(){
    START
 ========================= */
 
-renderPairs(pairs);
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    document
+      .getElementById("orbPair")
+      .innerText =
+      selectedPair;
+
+    document
+      .getElementById("orbTime")
+      .innerText =
+      selectedTime;
+
+  }
+);
 
 </script>
 
 </body>
-                           </html>
+</html>
