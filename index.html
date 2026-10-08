@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza's Signals</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  background:#050914;
+  color:white;
+  min-height:100vh;
+}
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
+.header{
+  text-align:center;
+  padding:20px 0;
+}
+.logo{
+  font-size:30px;
+  font-weight:bold;
+  color:#00e5ff;
+  text-shadow:0 0 15px #00e5ff;
+}
+.greeting{
+  margin-top:8px;
+  color:#aab7c8;
+}
+.card{
+  background:#0b1220;
+  border:1px solid #17263d;
+  border-radius:18px;
+  padding:18px;
+  margin-top:16px;
+  box-shadow:0 0 20px rgba(0,229,255,.06);
+}
+label{
+  display:block;
+  color:#9aa9bd;
+  margin-bottom:8px;
+  font-size:14px;
+}
+select,button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+}
+select{
+  background:#111b2d;
+  color:white;
+  border:1px solid #263852;
+}
+button{
+  margin-top:16px;
+  background:linear-gradient(90deg,#00b8d4,#006eff);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.signal{
+  display:none;
+  text-align:center;
+}
+.direction{
+  font-size:38px;
+  font-weight:bold;
+  margin:10px;
+}
+.buy{color:#00ff88;text-shadow:0 0 15px #00ff88}
+.sell{color:#ff3155;text-shadow:0 0 15px #ff3155}
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+.box{
+  background:#111b2d;
+  border-radius:12px;
+  padding:12px;
+}
+.box small{
+  color:#8997aa;
+  display:block;
+}
+.box strong{
+  display:block;
+  margin-top:5px;
+}
+.history{
+  margin-top:10px;
+}
+.history-item{
+  padding:12px;
+  border-bottom:1px solid #1b2940;
+  display:flex;
+  justify-content:space-between;
+}
+.footer{
+  text-align:center;
+  color:#66758b;
+  font-size:12px;
+  padding:25px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">HAMZA'S SIGNALS</div>
+    <div class="greeting" id="greeting">Welcome 👋</div>
+  </div>
+
+  <div class="card">
+
+    <label>Currency Pair</label>
+    <select id="pair">
+      <option>EUR/USD</option>
+      <option>GBP/USD</option>
+      <option>USD/JPY</option>
+      <option>AUD/USD</option>
+      <option>USD/CAD</option>
+      <option>USD/CHF</option>
+      <option>NZD/USD</option>
+      <option>EUR/GBP</option>
+      <option>EUR/JPY</option>
+      <option>GBP/JPY</option>
+      <option>AUD/JPY</option>
+      <option>USD/SGD</option>
+    </select>
+
+    <label style="margin-top:16px">Timeframe</label>
+    <select id="timeframe">
+      <option>1 Minute</option>
+      <option>2 Minutes</option>
+      <option>5 Minutes</option>
+    </select>
+
+    <button onclick="generateSignal()">⚡ GENERATE SIGNAL</button>
+
+  </div>
+
+  <div class="card signal" id="signalCard">
+
+    <div id="signalPair">EUR/USD</div>
+
+    <div class="direction" id="direction">
+      BUY 🟢
+    </div>
+
+    <div id="confidence">Confidence: 80%</div>
+
+    <div class="info">
+
+      <div class="box">
+        <small>Entry Time</small>
+        <strong id="entry">--:--:--</strong>
+      </div>
+
+      <div class="box">
+        <small>Expiry</small>
+        <strong id="expiry">1 Minute</strong>
+      </div>
+
+      <div class="box">
+        <small>Market Trend</small>
+        <strong id="trend">Bullish</strong>
+      </div>
+
+      <div class="box">
+        <small>Status</small>
+        <strong>Signal Ready</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>📜 Signal History</h3>
+    <div class="history" id="history">
+      <p style="color:#718096;margin-top:12px">
+        No signals generated yet.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Hamza's Signals © 2026<br>
+    Trading signals are for analysis/testing purposes.
+  </div>
+
+</div>
+
+<script>
+
+function updateGreeting(){
+
+  const hour = new Date().getHours();
+
+  let greeting;
+
+  if(hour >= 5 && hour < 12){
+    greeting = "Good Morning ☀️";
+  }
+  else if(hour >= 12 && hour < 17){
+    greeting = "Good Afternoon 🌤️";
+  }
+  else if(hour >= 17 && hour < 21){
+    greeting = "Good Evening 🌆";
+  }
+  else{
+    greeting = "Good Night 🌙";
+  }
+
+  document.getElementById("greeting").innerText =
+    greeting + " — Welcome to Hamza's Signals 👋";
+}
+
+function generateSignal(){
+
+  const pair =
+    document.getElementById("pair").value;
+
+  const timeframe =
+    document.getElementById("timeframe").value;
+
+  const isBuy =
+    Math.random() >= 0.5;
+
+  const confidence =
+    Math.floor(Math.random()*11) + 80;
+
+  const trend =
+    isBuy ? "Bullish 📈" : "Bearish 📉";
+
+  const now = new Date();
+
+  const time =
+    now.toLocaleTimeString();
+
+  const direction =
+    document.getElementById("direction");
+
+  direction.innerText =
+    isBuy ? "BUY 🟢" : "SELL 🔴";
+
+  direction.className =
+    "direction " + (isBuy ? "buy" : "sell");
+
+  document.getElementById("signalPair").innerText =
+    pair;
+
+  document.getElementById("confidence").innerText =
+    "Confidence: " + confidence + "%";
+
+  document.getElementById("entry").innerText =
+    time;
+
+  document.getElementById("expiry").innerText =
+    timeframe;
+
+  document.getElementById("trend").innerText =
+    trend;
+
+  document.getElementById("signalCard").style.display =
+    "block";
+
+  addHistory(
+    pair,
+    isBuy ? "BUY 🟢" : "SELL 🔴",
+    confidence,
+    time
+  );
+}
+
+function addHistory(pair, signal, confidence, time){
+
+  const history =
+    document.getElementById("history");
+
+  if(history.innerText.includes("No signals")){
+    history.innerHTML = "";
+  }
+
+  const item =
+    document.createElement("div");
+
+  item.className = "history-item";
+
+  item.innerHTML = `
+    <span>
+      <b>${pair}</b><br>
+      <small>${time}</small>
+    </span>
+
+    <span>
+      ${signal}<br>
+      <small>${confidence}%</small>
+    </span>
+  `;
+
+  history.prepend(item);
+}
+
+updateGreeting();
+
+</script>
+
+</body>
+  </html>
