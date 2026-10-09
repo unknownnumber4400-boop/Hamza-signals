@@ -2,1836 +2,286 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HAMZA'S SIGNALS</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 20% 10%,#07345f 0%,transparent 30%),
-    radial-gradient(circle at 90% 90%,#001d40 0%,transparent 30%),
-    #02050a;
-  color:#fff;
-  overflow-x:hidden;
-}
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:radial-gradient(#168cff 1px,transparent 1px);
-  background-size:35px 35px;
-  opacity:.12;
-  animation:dotsMove 15s linear infinite;
-  pointer-events:none;
-}
-
-@keyframes dotsMove{
-  from{background-position:0 0}
-  to{background-position:350px 350px}
-}
-
-.container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:18px;
-  position:relative;
-  z-index:2;
-}
-
-.logo{
-  text-align:center;
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:2px;
-  margin:15px 0 25px;
-  color:#fff;
-  text-shadow:
-    0 0 8px #008cff,
-    0 0 25px #008cff;
-}
-
-.card{
-  background:rgba(4,15,29,.78);
-  border:1px solid rgba(0,145,255,.45);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:16px;
-  backdrop-filter:blur(15px);
-  box-shadow:
-    0 0 22px rgba(0,130,255,.14),
-    inset 0 0 20px rgba(0,100,255,.04);
-}
-
-.title{
-  font-size:18px;
-  font-weight:bold;
-  color:#69c7ff;
-  margin-bottom:14px;
-}
-
-.hidden{
-  display:none!important;
-}
-
-input,
-select{
-  width:100%;
-  padding:14px;
-  margin:7px 0;
-  border-radius:12px;
-  border:1px solid #1769a8;
-  background:#06111f;
-  color:#fff;
-  outline:none;
-}
-
-input:focus{
-  border-color:#00aaff;
-  box-shadow:0 0 12px rgba(0,170,255,.3);
-}
-
-button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border:0;
-  border-radius:13px;
-  color:#fff;
-  font-weight:bold;
-  font-size:15px;
-  background:linear-gradient(90deg,#006eff,#00b7ff);
-  box-shadow:0 0 18px rgba(0,140,255,.35);
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-.login{
-  margin-top:45px;
-}
-
-.status{
-  text-align:center;
-  color:#7fcfff;
-  font-size:12px;
-  margin-top:9px;
-}
-
-.broker-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.broker{
-  background:#06111f;
-  border:1px solid #155889;
-}
-
-.broker.active{
-  background:linear-gradient(135deg,#005eff,#00aaff);
-  box-shadow:0 0 20px #008cff;
-}
-
-.time-buttons{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.time-btn{
-  background:#06111f;
-  border:1px solid #155889;
-  font-size:12px;
-}
-
-.time-btn.active{
-  background:#007cff;
-  box-shadow:0 0 15px #007cff;
-}
-
-.search{
-  margin-bottom:8px;
-}
-
-.pairs{
-  max-height:300px;
-  overflow-y:auto;
-}
-
-.pair{
-  padding:13px;
-  margin:7px 0;
-  background:#06111f;
-  border:1px solid #123c5d;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-.pair.active{
-  border-color:#00aaff;
-  box-shadow:0 0 12px rgba(0,170,255,.35);
-}
-
-/* =========================
-   SCANNING ORB
-========================= */
-
-.orb-area{
-  width:100%;
-  height:330px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-}
-
-.orb{
-  width:185px;
-  height:185px;
-  border-radius:50%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  position:relative;
-  z-index:3;
-
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      #104d7c 0%,
-      #06233f 38%,
-      #020b15 72%,
-      #010408 100%
-    );
-
-  border:2px solid #00aaff;
-
-  box-shadow:
-    0 0 15px #008cff,
-    0 0 35px #008cff,
-    0 0 75px rgba(0,140,255,.45),
-    inset 0 0 35px rgba(0,140,255,.55);
-
-  animation:orbPulse 2s ease-in-out infinite;
-}
-
-.orb::before{
-  content:"";
-  position:absolute;
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  border:3px solid transparent;
-  border-top-color:#00d5ff;
-  border-right-color:#008cff;
-  border-bottom-color:#005eff;
-  animation:rotateClockwise 1.7s linear infinite;
-  box-shadow:
-    0 0 10px #008cff,
-    0 0 20px rgba(0,140,255,.6);
-}
-
-.orb::after{
-  content:"";
-  position:absolute;
-  width:250px;
-  height:250px;
-  border-radius:50%;
-  border:2px dashed rgba(0,174,255,.85);
-  animation:rotateReverse 4.5s linear infinite;
-  box-shadow:0 0 15px rgba(0,140,255,.5);
-}
-
-@keyframes rotateClockwise{
-  from{
-    transform:rotate(0deg);
-  }
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-@keyframes rotateReverse{
-  from{
-    transform:rotate(360deg);
-  }
-  to{
-    transform:rotate(0deg);
-  }
-}
-
-@keyframes orbPulse{
-  0%,100%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.035);
-  }
-}
-
-.orb-main{
-  position:relative;
-  z-index:5;
-  font-size:23px;
-  font-weight:900;
-  color:#fff;
-  text-shadow:
-    0 0 8px #00aaff,
-    0 0 18px #008cff;
-}
-
-.orb-sub{
-  position:relative;
-  z-index:5;
-  margin-top:8px;
-  color:#72d5ff;
-  font-size:13px;
-}
-
-.scan{
-  position:relative;
-  z-index:5;
-  margin-top:10px;
-  color:#00d5ff;
-  font-size:12px;
-  animation:scanBlink .8s infinite;
-}
-
-@keyframes scanBlink{
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.3;
-  }
-}
-
-/* =========================
-   SIGNAL
-========================= */
-
-.signal{
-  text-align:center;
-}
-
-.signal-direction{
-  font-size:45px;
-  font-weight:900;
-  margin:10px 0;
-}
-
-.buy{
-  color:#00ff8c;
-  text-shadow:0 0 20px #00ff8c;
-}
-
-.sell{
-  color:#ff3d5a;
-  text-shadow:0 0 20px #ff3d5a;
-}
-
-.signal-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:15px;
-}
-
-.info{
-  background:#06111f;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #123c5d;
-}
-
-.info small{
-  display:block;
-  color:#7694aa;
-  margin-bottom:4px;
-}
-
-/* =========================
-   HISTORY
-========================= */
-
-.history-item{
-  background:#06111f;
-  border-radius:12px;
-  padding:12px;
-  margin:8px 0;
-  border-left:3px solid #008cff;
-  font-size:13px;
-  line-height:1.6;
-}
-
-/* =========================
-   AI
-========================= */
-
-.ai-float{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#006eff,#00c6ff);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:25px;
-  box-shadow:
-    0 0 15px #008cff,
-    0 0 30px rgba(0,140,255,.55);
-  z-index:20;
-  cursor:pointer;
-}
-
-.ai-panel{
-  position:fixed;
-  right:15px;
-  bottom:85px;
-  width:calc(100% - 30px);
-  max-width:400px;
-  height:480px;
-  background:rgba(3,12,24,.97);
-  border:1px solid #008cff;
-  border-radius:20px;
-  z-index:19;
-  box-shadow:0 0 30px rgba(0,140,255,.4);
-  padding:15px;
-  display:none;
-  flex-direction:column;
-}
-
-.ai-panel.show{
-  display:flex;
-}
-
-.ai-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.ai-header button{
-  width:45px;
-  margin:0;
-  padding:8px;
-}
-
-.ai-messages{
-  flex:1;
-  overflow-y:auto;
-  background:#020812;
-  border-radius:12px;
-  padding:10px;
-}
-
-.msg{
-  background:#071827;
-  border:1px solid #123c5d;
-  padding:10px;
-  border-radius:10px;
-  margin:7px 0;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.ai-input-row{
-  display:flex;
-  gap:7px;
-  margin-top:8px;
-}
-
-.ai-input-row input{
-  margin:0;
-}
-
-.ai-input-row button{
-  width:80px;
-  margin:0;
-}
-
-.logout{
-  background:linear-gradient(90deg,#a90028,#ff1744);
-}
-
-/* =========================
-   WELCOME
-========================= */
-
-#welcome{
-  text-align:center;
-  line-height:1.7;
-}
-
-.yesno{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.no{
-  background:#182432;
-}
-
-@media(max-width:380px){
-
-  .time-buttons{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .orb{
-    width:165px;
-    height:165px;
-  }
-
-  .orb::before{
-    width:200px;
-    height:200px;
-  }
-
-  .orb::after{
-    width:225px;
-    height:225px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#050914;color:#eef6ff;font-family:Arial,sans-serif}
+:root{--blue:#12aaff;--green:#00f5a0;--red:#ff426b}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.wrap{max-width:520px;margin:auto;padding:18px}
+.card{background:linear-gradient(145deg,#101c30,#080e1b);border:1px solid #173b60;border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 0 24px #007bff12}
+h1,h2,p{text-align:center}
+h1{font-size:26px;letter-spacing:2px}
+h2{font-size:19px}
+.muted{color:#94a9c5;font-size:13px;line-height:1.6}
+input,select{width:100%;padding:13px;margin:7px 0;background:#081321;color:white;border:1px solid #245078;border-radius:12px}
+.btn{width:100%;padding:14px;border:1px solid #167cc4;border-radius:13px;color:white;background:linear-gradient(90deg,#0759b7,#08a7ed);font-weight:bold;margin-top:9px}
+.btn:disabled{opacity:.55}
+.orb{width:150px;height:150px;border-radius:50%;margin:20px auto;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:radial-gradient(circle,#102d4e,#050914 70%);border:2px solid #10aaff;box-shadow:0 0 20px #008cff, inset 0 0 22px #008cff55;animation:pulse 2s infinite}
+.orb:before,.orb:after{content:"";position:absolute;inset:-10px;border:1px dashed #19baff;border-radius:50%;animation:spin 8s linear infinite}
+.orb:after{inset:-18px;border-color:#00f5a0;animation-direction:reverse;animation-duration:12s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{50%{box-shadow:0 0 35px #008cff,inset 0 0 25px #008cff66}}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin:2px;animation:pulse 1s infinite}
+.row{display:flex;gap:10px}
+.row>*{flex:1;min-width:0}
+.pair-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.pair{padding:11px 5px;border-radius:10px;border:1px solid #244362;background:#0a1424;color:#d9eaff}
+.pair.active{border-color:var(--green);color:var(--green);box-shadow:0 0 10px #00f5a022}
+.signal{font-size:28px;font-weight:bold;text-align:center;padding:10px}
+.buy{color:var(--green)}.sell{color:var(--red)}
+#history .item{border-bottom:1px solid #20334c;padding:10px 0;font-size:13px}
+#aiBox{height:180px;overflow:auto;background:#070d18;border-radius:12px;padding:10px;font-size:13px}
+.msg{padding:9px;margin:6px 0;border-radius:9px;background:#10233a;line-height:1.5}
+.logo{font-size:13px;color:#72caff;letter-spacing:3px}
+#login{padding-top:20px}
+.dollar{width:23px;height:23px;vertical-align:middle;margin-right:8px}
+.foot{text-align:center;color:#7186a3;font-size:11px;line-height:1.7;padding:14px}
 </style>
 </head>
-
 <body>
+<div class="wrap">
 
-<div class="container">
+<section id="login">
+  <div class="card">
+    <p class="logo">WELCOME TO</p>
+    <h1>HAMZA'S SIGNALS</h1>
+    <div class="orb"><div><div style="font-size:30px">◉</div><b>AI SIGNALS</b><br><span class="muted">WELCOME</span></div></div>
+    <h2 id="loginGreeting">Welcome, Trader!</h2>
+    <p class="muted">Sign in to access your trading dashboard</p>
+    <input id="username" placeholder="Username" autocomplete="username">
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn" onclick="login()">LOGIN</button>
+    <p id="loginError" class="muted"></p>
+  </div>
+</section>
 
-  <!-- LOGIN -->
-  <section id="loginScreen" class="card login">
-
-    <div class="logo">HAMZA'S SIGNALS</div>
-
-    <div class="title">🔐 Secure Login</div>
-
-    <input
-      id="username"
-      type="text"
-      placeholder="Username"
-      autocomplete="off"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
-
-    <button onclick="login()">LOGIN</button>
-
-    <div id="loginStatus" class="status"></div>
-
-  </section>
-
-
-  <!-- MAIN APP -->
-  <section id="app" class="hidden">
-
-    <div class="logo">HAMZA'S SIGNALS</div>
-
-
-    <!-- AI WELCOME -->
-    <div id="welcome" class="card">
-
-      <div class="title">🤖 AI Assistant</div>
-
-      <p>
-        Kya aap AI se baat karna ya koi question poochna chahte hain?
-      </p>
-
-      <div class="yesno">
-
-        <button onclick="openAI()">
-          YES
-        </button>
-
-        <button class="no" onclick="closeWelcome()">
-          NO
-        </button>
-
+<section id="dashboard" class="hidden">
+  <div class="card">
+    <p class="logo">HAMZA'S SIGNALS • AI TRADING ASSISTANT</p>
+    <h1 id="welcomeTitle">Welcome!</h1>
+    <p class="muted" id="todayGreeting"></p>
+    <div class="row">
+      <div><label class="muted">Broker</label>
+        <select id="broker"><option>Quotex</option><option>Tradowix</option></select>
       </div>
-
-    </div>
-
-
-    <!-- BROKER -->
-    <div class="card">
-
-      <div class="title">🏦 Select Broker</div>
-
-      <div class="broker-buttons">
-
-        <button
-          id="quotex"
-          class="broker active"
-          onclick="selectBroker('Quotex')">
-          QUOTEX
-        </button>
-
-        <button
-          id="tradowix"
-          class="broker"
-          onclick="selectBroker('Tradowix')">
-          TRADOWIX
-        </button>
-
+      <div><label class="muted">Timeframe</label>
+        <select id="timeframe">
+          <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
+          <option>1 MIN</option><option>2 MIN</option><option>5 MIN</option>
+        </select>
       </div>
-
     </div>
+    <div class="orb" id="marketOrb"><div><b id="orbTitle">MARKET READY</b><br><span class="muted" id="orbSub">Select a pair</span><br><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+    <p class="muted">Select a currency pair</p>
+    <input id="pairSearch" placeholder="Search pair e.g. EUR/USD" oninput="renderPairs()">
+    <div id="pairList" class="pair-list"></div>
+  </div>
 
-
-    <!-- TIMEFRAME -->
-    <div class="card">
-
-      <div class="title">⏱ Select Timeframe</div>
-
-      <div class="time-buttons">
-
-        <button
-          class="time-btn"
-          onclick="selectTime('5 SEC',this)">
-          5 SEC
-        </button>
-
-        <button
-          class="time-btn"
-          onclick="selectTime('15 SEC',this)">
-          15 SEC
-        </button>
-
-        <button
-          class="time-btn"
-          onclick="selectTime('30 SEC',this)">
-          30 SEC
-        </button>
-
-        <button
-          class="time-btn active"
-          onclick="selectTime('1 MIN',this)">
-          1 MIN
-        </button>
-
-        <button
-          class="time-btn"
-          onclick="selectTime('2 MIN',this)">
-          2 MIN
-        </button>
-
-        <button
-          class="time-btn"
-          onclick="selectTime('5 MIN',this)">
-          5 MIN
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- PAIRS -->
-    <div class="card">
-
-      <div class="title">💱 Select Currency Pair</div>
-
-      <input
-        id="pairSearch"
-        class="search"
-        type="text"
-        placeholder="Search pair..."
-        oninput="filterPairs()"
-      >
-
-      <div id="pairs" class="pairs"></div>
-
-    </div>
-
-
-    <!-- SCANNER -->
-    <div class="card">
-
-      <div class="title">📡 AI Market Scanner</div>
-
-      <div class="orb-area">
-
-        <div class="orb">
-
-          <div id="orbPair" class="orb-main">
-            EUR/USD
-          </div>
-
-          <div id="orbTime" class="orb-sub">
-            1 MIN
-          </div>
-
-          <div id="scanText" class="scan">
-            READY TO SCAN
-          </div>
-
-        </div>
-
-      </div>
-
-      <button onclick="generateSignal()">
-        ⚡ GENERATE SIGNAL
-      </button>
-
-      <div id="marketStatus" class="status">
-        Market data ready
-      </div>
-
-    </div>
-
-
-    <!-- RESULT -->
-    <div id="resultCard" class="card hidden">
-
-      <div class="title">🎯 SIGNAL RESULT</div>
-
-      <div id="signalResult" class="signal"></div>
-
-    </div>
-
-
-    <!-- HISTORY -->
-    <div class="card">
-
-      <div class="title">📜 Signal History</div>
-
-      <div id="history">
-
-        <div class="status">
-          No signals yet
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <button class="logout" onclick="logout()">
-      LOGOUT
+  <div class="card">
+    <h2>Generate Signal</h2>
+    <p class="muted">Market data will be checked before analysis.</p>
+    <button class="btn" id="generateBtn" onclick="generateSignal()">
+      <svg class="dollar" viewBox="0 0 24 24" fill="none" aria-label="Dollar icon">
+        <circle cx="12" cy="12" r="10" fill="#00f5a0"/>
+        <path d="M15.5 8.5c-.6-1-1.7-1.5-3.2-1.5-1.8 0-3 .9-3 2.2 0 3.5 6.4 1.2 6.4 4.7 0 1.5-1.4 2.6-3.5 2.6-1.5 0-2.8-.6-3.6-1.7M12 5v14" stroke="#04251b" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      GENERATE SIGNAL
     </button>
-
-  </section>
-
-</div>
-
-
-<!-- AI FLOATING BUTTON -->
-<div class="ai-float" onclick="toggleAI()">
-  🤖
-</div>
-
-
-<!-- AI PANEL -->
-<div id="aiPanel" class="ai-panel">
-
-  <div class="ai-header">
-
-    <strong>🤖 HAMZA AI</strong>
-
-    <button onclick="toggleAI()">✕</button>
-
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-
-    <div class="msg">
-      AI: Assalam-o-Alaikum! Main HAMZA'S SIGNALS AI hoon.
-      Aap mujhse question pooch sakte hain.
+    <div id="signalResult" class="hidden">
+      <div id="signalDirection" class="signal">—</div>
+      <p id="signalPair"></p>
+      <div class="row">
+        <div class="card"><p class="muted">Latest price</p><h2 id="price">—</h2></div>
+        <div class="card"><p class="muted">RSI (14)</p><h2 id="rsi">—</h2></div>
+      </div>
+      <p id="signalDetails" class="muted"></p>
+      <p class="muted">Indicator score is not a verified win probability. Trading carries risk.</p>
     </div>
-
+    <p id="status" class="muted">Ready to scan.</p>
   </div>
 
-  <div class="ai-input-row">
-
-    <input
-      id="aiInput"
-      type="text"
-      placeholder="Ask AI..."
-      onkeydown="if(event.key==='Enter')sendAI()"
-    >
-
-    <button onclick="sendAI()">
-      SEND
-    </button>
-
+  <div class="card">
+    <h2>Signal History</h2>
+    <div id="history"><p class="muted">No signals yet.</p></div>
   </div>
 
+  <div class="card">
+    <h2>Talk to AI</h2>
+    <p class="muted">Ask about indicators, market concepts or risk management.</p>
+    <div id="aiBox"><div class="msg">AI: Assalam-o-Alaikum! Main HAMZA'S SIGNALS AI assistant hoon. Kya poochna chahte ho?</div></div>
+    <input id="aiInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendAI()">
+    <button class="btn" onclick="sendAI()">ASK AI</button>
+  </div>
+  <button class="btn" style="background:#111d2c" onclick="logout()">LOG OUT</button>
+  <div class="foot">Market data may differ from Quotex/Tradowix OTC prices. Signals are informational, not guaranteed. Never risk money you cannot afford to lose.</div>
+</section>
 </div>
-
 
 <script>
-
-/* =========================
-   API
-========================= */
-
-const MARKET_API =
-"https://hamza-signals-api.hamzamughal198226.workers.dev";
-
-
-/* =========================
-   VARIABLES
-========================= */
-
-let selectedBroker = "Quotex";
-let selectedTime = "1 MIN";
-let selectedPair = "EUR/USD";
-
-
-/* =========================
-   PAIRS
-========================= */
-
-const pairs = [
-
-  "EUR/USD",
-  "GBP/USD",
-  "USD/JPY",
-  "AUD/USD",
-  "USD/CAD",
-  "USD/CHF",
-  "NZD/USD",
-
-  "EUR/GBP",
-  "EUR/JPY",
-  "EUR/CHF",
-  "EUR/AUD",
-  "EUR/CAD",
-  "EUR/NZD",
-
-  "GBP/JPY",
-  "GBP/CHF",
-  "GBP/AUD",
-  "GBP/CAD",
-  "GBP/NZD",
-
-  "AUD/JPY",
-  "AUD/CHF",
-  "AUD/CAD",
-  "AUD/NZD",
-
-  "CAD/JPY",
-  "CAD/CHF",
-  "CHF/JPY",
-
-  "NZD/JPY",
-  "NZD/CHF",
-  "NZD/CAD",
-
-  "USD/SGD",
-  "USD/HKD",
-  "USD/ZAR",
-  "USD/MXN",
-  "USD/TRY",
-
-  "EUR/TRY",
-  "EUR/ZAR",
-  "GBP/ZAR",
-
-  "XAU/USD",
-  "XAG/USD"
-
+const MARKET_API="https://hamza-signals-api.hamzamughal198226.workers.dev";
+const pairs=[
+"EUR/USD","GBP/USD","USD/JPY","AUD/USD","USD/CAD","USD/CHF","NZD/USD",
+"EUR/GBP","EUR/JPY","EUR/CHF","EUR/AUD","EUR/CAD","EUR/NZD",
+"GBP/JPY","GBP/CHF","GBP/AUD","GBP/CAD","GBP/NZD",
+"AUD/JPY","AUD/CHF","AUD/CAD","AUD/NZD","CAD/JPY","CAD/CHF",
+"CHF/JPY","NZD/JPY","NZD/CHF","NZD/CAD","USD/SGD","USD/HKD",
+"USD/ZAR","USD/MXN","USD/TRY","EUR/TRY","EUR/ZAR","GBP/ZAR",
+"XAU/USD","XAG/USD"
 ];
+let selectedPair="EUR/USD";
+let historyItems=[];
 
-
-/* =========================
-   LOGIN
-========================= */
-
+function greeting(){
+ const h=new Date().getHours();
+ if(h<12)return "Good Morning";
+ if(h<17)return "Good Afternoon";
+ if(h<21)return "Good Evening";
+ return "Good Night";
+}
+document.getElementById("loginGreeting").textContent=greeting()+"!";
 function login(){
-
-  const username =
-    document.getElementById("username").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  const status =
-    document.getElementById("loginStatus");
-
-  if(username === "Hamza" && password === "Aliza"){
-
-    document
-      .getElementById("loginScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("app")
-      .classList.remove("hidden");
-
-    renderPairs();
-
-    playBeep();
-
-  }else{
-
-    status.innerText =
-      "❌ Wrong username or password";
-
-  }
-
+ const u=document.getElementById("username").value.trim();
+ const p=document.getElementById("password").value;
+ if(u!=="Hamza"||p!=="Aliza"){
+   document.getElementById("loginError").textContent="Incorrect username or password.";
+   return;
+ }
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("dashboard").classList.remove("hidden");
+ document.getElementById("welcomeTitle").textContent=greeting()+", Hamza!";
+ document.getElementById("todayGreeting").textContent=
+   "Assalam-o-Alaikum! "+greeting()+". Market ko carefully analyze karein aur risk management follow karein.";
+ renderPairs();
 }
-
-
-/* =========================
-   LOGOUT
-========================= */
-
 function logout(){
-
-  document
-    .getElementById("app")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
-
+ document.getElementById("dashboard").classList.add("hidden");
+ document.getElementById("login").classList.remove("hidden");
 }
-
-
-/* =========================
-   BROKER
-========================= */
-
-function selectBroker(broker){
-
-  selectedBroker = broker;
-
-  document
-    .getElementById("quotex")
-    .classList.remove("active");
-
-  document
-    .getElementById("tradowix")
-    .classList.remove("active");
-
-  if(broker === "Quotex"){
-
-    document
-      .getElementById("quotex")
-      .classList.add("active");
-
-  }else{
-
-    document
-      .getElementById("tradowix")
-      .classList.add("active");
-
-  }
-
-  playBeep();
-
-}
-
-
-/* =========================
-   TIMEFRAME
-========================= */
-
-function selectTime(time,element){
-
-  selectedTime = time;
-
-  document
-    .getElementById("orbTime")
-    .innerText = time;
-
-  document
-    .querySelectorAll(".time-btn")
-    .forEach(function(btn){
-      btn.classList.remove("active");
-    });
-
-  element.classList.add("active");
-
-  playBeep();
-
-}
-
-
-/* =========================
-   PAIR RENDER
-========================= */
-
 function renderPairs(){
-
-  const box =
-    document.getElementById("pairs");
-
-  box.innerHTML = "";
-
-  pairs.forEach(function(pair){
-
-    const div =
-      document.createElement("div");
-
-    div.className = "pair";
-
-    if(pair === selectedPair){
-      div.classList.add("active");
-    }
-
-    div.innerText = pair;
-
-    div.onclick = function(){
-
-      selectedPair = pair;
-
-      document
-        .getElementById("orbPair")
-        .innerText = pair;
-
-      renderPairs();
-
-      playBeep();
-
-    };
-
-    box.appendChild(div);
-
-  });
-
+ const q=document.getElementById("pairSearch").value.toUpperCase().trim();
+ const list=document.getElementById("pairList");
+ list.innerHTML="";
+ pairs.filter(p=>p.includes(q)).forEach(p=>{
+   const b=document.createElement("button");
+   b.className="pair"+(p===selectedPair?" active":"");
+   b.textContent=p;
+   b.onclick=()=>{
+     selectedPair=p;renderPairs();
+     document.getElementById("orbTitle").textContent=p;
+     document.getElementById("orbSub").textContent="PAIR SELECTED";
+   };
+   list.appendChild(b);
+ });
 }
-
-
-/* =========================
-   PAIR SEARCH
-========================= */
-
-function filterPairs(){
-
-  const query =
-    document
-      .getElementById("pairSearch")
-      .value
-      .trim()
-      .toUpperCase();
-
-  const box =
-    document.getElementById("pairs");
-
-  box.innerHTML = "";
-
-  pairs
-    .filter(function(pair){
-      return pair.includes(query);
-    })
-    .forEach(function(pair){
-
-      const div =
-        document.createElement("div");
-
-      div.className = "pair";
-
-      if(pair === selectedPair){
-        div.classList.add("active");
-      }
-
-      div.innerText = pair;
-
-      div.onclick = function(){
-
-        selectedPair = pair;
-
-        document
-          .getElementById("orbPair")
-          .innerText = pair;
-
-        renderPairs();
-
-        playBeep();
-
-      };
-
-      box.appendChild(div);
-
-    });
-
+function ema(values,period){
+ if(values.length<period)return null;
+ let e=values.slice(0,period).reduce((a,b)=>a+b,0)/period;
+ const k=2/(period+1);
+ for(let i=period;i<values.length;i++)e=values[i]*k+e*(1-k);
+ return e;
 }
-
-
-/* =========================
-   MARKET DATA
-========================= */
-
-async function getMarketData(symbol){
-
-  const url =
-    MARKET_API +
-    "/market?symbol=" +
-    encodeURIComponent(symbol) +
-    "&interval=1min";
-
-  const response =
-    await fetch(url);
-
-  if(!response.ok){
-    throw new Error("Market API error");
-  }
-
-  const data =
-    await response.json();
-
-  if(data.status !== "ok"){
-    throw new Error(
-      data.error || "Market data unavailable"
-    );
-  }
-
-  if(
-    !data.candles ||
-    data.candles.length < 25
-  ){
-    throw new Error(
-      "Not enough market candles"
-    );
-  }
-
-  return data.candles;
-
+function rsi(values,period=14){
+ if(values.length<=period)return null;
+ let gains=0,losses=0;
+ for(let i=values.length-period;i<values.length;i++){
+   const d=values[i]-values[i-1];
+   if(d>0)gains+=d;else losses-=d;
+ }
+ if(losses===0)return 100;
+ return 100-(100/(1+gains/losses));
 }
-
-
-/* =========================
-   EMA
-========================= */
-
-function calculateEMA(values,period){
-
-  if(values.length === 0){
-    return 0;
-  }
-
-  const multiplier =
-    2 / (period + 1);
-
-  let emaValue =
-    values[0];
-
-  for(
-    let i = 1;
-    i < values.length;
-    i++
-  ){
-
-    emaValue =
-      ((values[i] - emaValue) * multiplier)
-      + emaValue;
-
-  }
-
-  return emaValue;
-
-}
-
-
-/* =========================
-   RSI
-========================= */
-
-function calculateRSI(closes,period){
-
-  if(closes.length <= period){
-    return 50;
-  }
-
-  let gains = 0;
-  let losses = 0;
-
-  for(
-    let i = 1;
-    i <= period;
-    i++
-  ){
-
-    const change =
-      closes[i] - closes[i-1];
-
-    if(change >= 0){
-      gains += change;
-    }else{
-      losses += Math.abs(change);
-    }
-
-  }
-
-  let averageGain =
-    gains / period;
-
-  let averageLoss =
-    losses / period;
-
-  for(
-    let i = period + 1;
-    i < closes.length;
-    i++
-  ){
-
-    const change =
-      closes[i] - closes[i-1];
-
-    const gain =
-      change > 0 ? change : 0;
-
-    const loss =
-      change < 0 ? Math.abs(change) : 0;
-
-    averageGain =
-      ((averageGain * (period - 1)) + gain)
-      / period;
-
-    averageLoss =
-      ((averageLoss * (period - 1)) + loss)
-      / period;
-
-  }
-
-  if(averageLoss === 0){
-    return 100;
-  }
-
-  const relativeStrength =
-    averageGain / averageLoss;
-
-  return 100 -
-    (100 / (1 + relativeStrength));
-
-}
-
-
-/* =========================
-   ANALYSIS
-========================= */
-
-function analyzeCandles(candles){
-
-  const closes =
-    candles.map(function(c){
-      return Number(c.close);
-    });
-
-  const opens =
-    candles.map(function(c){
-      return Number(c.open);
-    });
-
-  const last =
-    closes[closes.length - 1];
-
-  const previous =
-    closes[closes.length - 2];
-
-  const lastOpen =
-    opens[opens.length - 1];
-
-  const ema9 =
-    calculateEMA(closes,9);
-
-  const ema21 =
-    calculateEMA(closes,21);
-
-  const rsi =
-    calculateRSI(closes,14);
-
-  let buyScore = 0;
-  let sellScore = 0;
-
-
-  /* EMA TREND */
-
-  if(ema9 > ema21){
-    buyScore += 30;
-  }
-
-  if(ema9 < ema21){
-    sellScore += 30;
-  }
-
-
-  /* PRICE */
-
-  if(last > ema9){
-    buyScore += 15;
-  }
-
-  if(last < ema9){
-    sellScore += 15;
-  }
-
-
-  /* RSI */
-
-  if(rsi < 35){
-    buyScore += 20;
-  }
-
-  if(rsi > 65){
-    sellScore += 20;
-  }
-
-  if(rsi >= 35 && rsi <= 65){
-
-    if(ema9 > ema21){
-      buyScore += 10;
-    }else{
-      sellScore += 10;
-    }
-
-  }
-
-
-  /* LAST CANDLE */
-
-  if(last > lastOpen){
-    buyScore += 15;
-  }
-
-  if(last < lastOpen){
-    sellScore += 15;
-  }
-
-
-  /* MOMENTUM */
-
-  if(last > previous){
-    buyScore += 10;
-  }
-
-  if(last < previous){
-    sellScore += 10;
-  }
-
-
-  const direction =
-    buyScore >= sellScore
-      ? "BUY"
-      : "SELL";
-
-  const score =
-    Math.max(
-      buyScore,
-      sellScore
-    );
-
-  const confidence =
-    Math.min(
-      97,
-      Math.max(
-        51,
-        Math.round(score)
-      )
-    );
-
-  const trend =
-    ema9 > ema21
-      ? "Bullish"
-      : "Bearish";
-
-
-  return {
-    direction:direction,
-    confidence:confidence,
-    price:last,
-    ema9:ema9,
-    ema21:ema21,
-    rsi:rsi,
-    trend:trend
-  };
-
-}
-
-
-/* =========================
-   GENERATE SIGNAL
-========================= */
-
 async function generateSignal(){
-
-  const scan =
-    document.getElementById("scanText");
-
-  const status =
-    document.getElementById("marketStatus");
-
-  const resultCard =
-    document.getElementById("resultCard");
-
-
-  scan.innerText =
-    "SCANNING MARKET...";
-
-  status.innerText =
-    "Fetching live market candles...";
-
-  resultCard.classList.add("hidden");
-
-
-  try{
-
-    const candles =
-      await getMarketData(
-        selectedPair
-      );
-
-
-    scan.innerText =
-      "ANALYZING CANDLES...";
-
-
-    await new Promise(
-      function(resolve){
-        setTimeout(resolve,800);
-      }
-    );
-
-
-    const analysis =
-      analyzeCandles(candles);
-
-
-    showSignal(analysis);
-
-
-    scan.innerText =
-      "SCAN COMPLETE ✓";
-
-    status.innerText =
-      "Live market data loaded";
-
-
-    playBeep();
-
-
-  }catch(error){
-
-    console.error(error);
-
-    scan.innerText =
-      "SCAN FAILED";
-
-    status.innerText =
-      "❌ " + error.message;
-
-  }
-
+ const btn=document.getElementById("generateBtn");
+ const status=document.getElementById("status");
+ btn.disabled=true;
+ document.getElementById("signalResult").classList.add("hidden");
+ document.getElementById("orbTitle").textContent="SCANNING";
+ document.getElementById("orbSub").textContent=selectedPair;
+ status.textContent="Market data fetch ho raha hai...";
+ try{
+   // Twelve Data supports standard intervals such as 1min and 5min,
+   // not native 5-second or 15-second candles.
+   const tf=document.getElementById("timeframe").value;
+   const interval=tf==="5 MIN"?"5min":"1min";
+   const url=MARKET_API+"/market?symbol="+encodeURIComponent(selectedPair)+"&interval="+interval;
+   const res=await fetch(url);
+   const data=await res.json();
+   if(!res.ok||data.status!=="ok"||!data.candles||data.candles.length<22){
+     throw new Error(data.message||data.error||"Market data unavailable");
+   }
+   const candles=data.candles.slice().reverse();
+   const closes=candles.map(c=>Number(c.close));
+   if(closes.some(v=>!Number.isFinite(v)))throw new Error("Invalid candle data");
+   const fast=ema(closes,9),slow=ema(closes,21),rv=rsi(closes,14);
+   const last=candles[candles.length-1];
+   const prev=candles[candles.length-2];
+   let score=0;
+   if(fast>slow)score++;
+   if(fast<slow)score--;
+   if(closes.at(-1)>closes.at(-2))score++;
+   if(closes.at(-1)<closes.at(-2))score--;
+   if(rv<35)score++;
+   if(rv>65)score--;
+   if(Number(last.close)>Number(last.open))score++;
+   if(Number(last.close)<Number(last.open))score--;
+   let direction="WAIT",cls="";
+   if(score>=2&&rv<70){direction="BUY";cls="buy"}
+   else if(score<=-2&&rv>30){direction="SELL";cls="sell"}
+   const result=document.getElementById("signalResult");
+   result.classList.remove("hidden");
+   const d=document.getElementById("signalDirection");
+   d.className="signal "+cls;
+   d.textContent=direction==="WAIT"?"NO CLEAR SIGNAL":direction==="BUY"?"BUY ▲":"SELL ▼";
+   document.getElementById("signalPair").textContent=
+     selectedPair+" • "+document.getElementById("broker").value+" • "+tf;
+   document.getElementById("price").textContent=Number(last.close).toFixed(5);
+   document.getElementById("rsi").textContent=rv.toFixed(1);
+   document.getElementById("signalDetails").textContent=
+     "EMA 9: "+fast.toFixed(5)+" | EMA 21: "+slow.toFixed(5)+
+     "\nIndicator alignment score: "+Math.round(Math.abs(score)/4*100)+"%"+
+     "\nData interval: "+interval+
+     (tf.includes("SEC")||tf==="2 MIN"?" (selected expiry is not directly supported by this candle feed)":"");
+   status.textContent="Analysis complete. Signal is not a guarantee.";
+   document.getElementById("orbTitle").textContent=direction;
+   document.getElementById("orbSub").textContent="ANALYSIS COMPLETE";
+   historyItems.unshift({pair:selectedPair,dir:direction,tf:tf,time:new Date().toLocaleTimeString()});
+   historyItems=historyItems.slice(0,10);
+   document.getElementById("history").innerHTML=historyItems.map(x=>
+     '<div class="item"><b>'+x.pair+'</b> — '+x.dir+'<br><span class="muted">'+x.tf+' • '+x.time+'</span></div>'
+   ).join("");
+ }catch(e){
+   status.textContent="Error: "+e.message+". Internet/API check karo.";
+   document.getElementById("orbTitle").textContent="DATA ERROR";
+   document.getElementById("orbSub").textContent="Try again";
+ }finally{btn.disabled=false;}
 }
-
-
-/* =========================
-   SHOW SIGNAL
-========================= */
-
-function showSignal(a){
-
-  const resultCard =
-    document.getElementById("resultCard");
-
-  const result =
-    document.getElementById("signalResult");
-
-  const isBuy =
-    a.direction === "BUY";
-
-  const directionClass =
-    isBuy ? "buy" : "sell";
-
-  const arrow =
-    isBuy ? "⬆ BUY" : "⬇ SELL";
-
-  const time =
-    new Date().toLocaleTimeString();
-
-
-  result.innerHTML =
-
-    '<div class="signal-direction ' +
-      directionClass +
-    '">' +
-      arrow +
-    '</div>' +
-
-    '<div class="signal-info">' +
-
-      '<div class="info">' +
-        '<small>PAIR</small>' +
-        selectedPair +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>BROKER</small>' +
-        selectedBroker +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>TIMEFRAME</small>' +
-        selectedTime +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>CONFIDENCE SCORE</small>' +
-        a.confidence +
-        '%' +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>PRICE</small>' +
-        Number(a.price).toFixed(5) +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>RSI</small>' +
-        Number(a.rsi).toFixed(2) +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>EMA 9</small>' +
-        Number(a.ema9).toFixed(5) +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>EMA 21</small>' +
-        Number(a.ema21).toFixed(5) +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>MARKET TREND</small>' +
-        a.trend +
-      '</div>' +
-
-      '<div class="info">' +
-        '<small>GENERATED</small>' +
-        time +
-      '</div>' +
-
-    '</div>' +
-
-    '<div class="status">' +
-      '⚠️ Confidence is an analysis score, not a guarantee of profit.' +
-    '</div>';
-
-
-  resultCard.classList.remove("hidden");
-
-  addHistory(a,time);
-
-}
-
-
-/* =========================
-   HISTORY
-========================= */
-
-function addHistory(a,time){
-
-  const history =
-    document.getElementById("history");
-
-  const empty =
-    history.querySelector(".status");
-
-  if(empty){
-    history.innerHTML = "";
-  }
-
-
-  const item =
-    document.createElement("div");
-
-  item.className =
-    "history-item";
-
-
-  item.innerHTML =
-
-    '<strong>' +
-      (a.direction === "BUY"
-        ? "🟢 BUY"
-        : "🔴 SELL") +
-    '</strong>' +
-
-    ' — ' +
-    selectedPair +
-
-    '<br>' +
-
-    selectedBroker +
-    ' • ' +
-    selectedTime +
-
-    '<br>' +
-
-    'Confidence Score: ' +
-    a.confidence +
-    '%' +
-
-    '<br>' +
-
-    'RSI: ' +
-    Number(a.rsi).toFixed(2) +
-    ' • ' +
-    time;
-
-
-  history.prepend(item);
-
-}
-
-
-/* =========================
-   AI PANEL
-========================= */
-
-function toggleAI(){
-
-  const panel =
-    document.getElementById("aiPanel");
-
-  panel.classList.toggle("show");
-
-}
-
-
-function openAI(){
-
-  document
-    .getElementById("welcome")
-    .classList.add("hidden");
-
-  document
-    .getElementById("aiPanel")
-    .classList.add("show");
-
-}
-
-
-function closeWelcome(){
-
-  document
-    .getElementById("welcome")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================
-   REAL AI
-========================= */
-
 async function sendAI(){
-
-  const input =
-    document.getElementById("aiInput");
-
-  const text =
-    input.value.trim();
-
-  if(!text){
-    return;
-  }
-
-
-  const messages =
-    document.getElementById("aiMessages");
-
-
-  const userMsg =
-    document.createElement("div");
-
-  userMsg.className =
-    "msg";
-
-  userMsg.innerText =
-    "You: " + text;
-
-  messages.appendChild(userMsg);
-
-
-  const botMsg =
-    document.createElement("div");
-
-  botMsg.className =
-    "msg";
-
-  botMsg.innerText =
-    "AI thinking...";
-
-  messages.appendChild(botMsg);
-
-
-  input.value = "";
-
-  messages.scrollTop =
-    messages.scrollHeight;
-
-
-  try{
-
-    const response =
-      await fetch(
-        MARKET_API + "/ai",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            message:text
-          })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !response.ok ||
-      data.status !== "ok"
-    ){
-
-      throw new Error(
-        data.error ||
-        "AI request failed"
-      );
-
-    }
-
-
-    botMsg.innerText =
-      "AI: " +
-      data.answer;
-
-
-  }catch(error){
-
-    console.error(error);
-
-    botMsg.innerText =
-      "AI error: " +
-      error.message;
-
-  }
-
-
-  messages.scrollTop =
-    messages.scrollHeight;
-
+ const input=document.getElementById("aiInput");
+ const text=input.value.trim();
+ if(!text)return;
+ const box=document.getElementById("aiBox");
+ const user=document.createElement("div");
+ user.className="msg";user.textContent="You: "+text;box.appendChild(user);
+ const answer=document.createElement("div");
+ answer.className="msg";answer.textContent="AI: Thinking...";box.appendChild(answer);
+ input.value="";
+ try{
+   const res=await fetch(MARKET_API+"/ai",{
+     method:"POST",headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({message:text})
+   });
+   const data=await res.json();
+   if(!res.ok||data.status!=="ok")throw new Error(data.error||"AI request failed");
+   answer.textContent="AI: "+data.answer;
+ }catch(e){
+   answer.textContent="AI error: "+e.message+". Worker aur OPENAI_API_KEY check karo.";
+ }
+ box.scrollTop=box.scrollHeight;
 }
-
-
-/* =========================
-   SOUND
-========================= */
-
-function playBeep(){
-
-  try{
-
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    if(!AudioContext){
-      return;
-    }
-
-
-    const ctx =
-      new AudioContext();
-
-    const oscillator =
-      ctx.createOscillator();
-
-    const gain =
-      ctx.createGain();
-
-
-    oscillator.type =
-      "sine";
-
-    oscillator.frequency.value =
-      700;
-
-    gain.gain.value =
-      0.04;
-
-
-    oscillator.connect(gain);
-
-    gain.connect(
-      ctx.destination
-    );
-
-
-    oscillator.start();
-
-    oscillator.stop(
-      ctx.currentTime + 0.08
-    );
-
-  }catch(error){
-
-    console.log(error);
-
-  }
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    document
-      .getElementById("orbPair")
-      .innerText =
-      selectedPair;
-
-    document
-      .getElementById("orbTime")
-      .innerText =
-      selectedTime;
-
-  }
-);
-
 </script>
-
 </body>
 </html>
