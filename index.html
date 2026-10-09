@@ -1,287 +1,368 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#030914">
 <title>HAMZA'S SIGNALS</title>
 <style>
+:root{--blue:#087cff;--cyan:#05cfff;--text:#eef8ff;--muted:#94aec8}
 *{box-sizing:border-box}
-body{margin:0;background:#050914;color:#eef6ff;font-family:Arial,sans-serif}
-:root{--blue:#12aaff;--green:#00f5a0;--red:#ff426b}
-button,input,select{font:inherit}
-button{cursor:pointer}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(ellipse at 50% 0,#09284c 0,#030b18 45%,#01040a 100%)}
+body{min-height:100vh;overflow-x:hidden}
+#dots{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#1684d8 1px,transparent 1.5px);background-size:31px 31px}
+#rain{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.note{position:absolute;top:-120px;width:76px;height:auto;border-radius:3px;filter:drop-shadow(0 0 8px #ffcb5680);animation:fall linear forwards;opacity:.72}
+@keyframes fall{0%{transform:translate3d(0,-12vh,0) rotate(-12deg);opacity:0}12%{opacity:.75}85%{opacity:.65}100%{transform:translate3d(var(--drift),115vh,0) rotate(var(--spin));opacity:0}}
+#app{position:relative;z-index:2;max-width:1050px;margin:auto;padding:22px 15px 25px}
+.glass{background:linear-gradient(145deg,rgba(6,24,46,.96),rgba(2,10,23,.96));border:1px solid #245b87a8;border-radius:24px;box-shadow:0 0 35px #008cff1e,inset 0 0 24px #0070ff0a}
+.login{max-width:650px;margin:7vh auto 0;padding:clamp(23px,5vw,46px)}
+h1{font-size:clamp(27px,5.5vw,46px);letter-spacing:2px;text-align:center;margin:8px 0 40px;text-shadow:0 0 16px #168dff}
+h2{font-size:22px;margin:0 0 20px;color:#7dcaff}
+.field,.select{display:block;width:100%;padding:16px 17px;margin:9px 0 13px;background:#04101f;border:1px solid #285b87;border-radius:16px;color:white;font-size:16px;outline:none}
+.field:focus,.select:focus{border-color:#08c9ff;box-shadow:0 0 0 3px #078cff20}
+button{cursor:pointer;border:0;color:white;font-weight:800;border-radius:16px;padding:15px 18px;background:linear-gradient(100deg,#0878ff,#08b9ef);box-shadow:0 8px 24px #008cff32}
+button:disabled{opacity:.65;cursor:wait}
+.wide{width:100%;margin-top:10px}
+.error{color:#ff8585;min-height:20px;font-size:14px}
+.subtle{color:var(--muted);font-size:13px;text-align:center;margin-top:14px}
+footer{text-align:center;color:#81cfff;font-weight:800;letter-spacing:2px;font-size:13px;padding:30px 10px 15px;text-shadow:0 0 12px #078cff}
 .hidden{display:none!important}
-.wrap{max-width:520px;margin:auto;padding:18px}
-.card{background:linear-gradient(145deg,#101c30,#080e1b);border:1px solid #173b60;border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 0 24px #007bff12}
-h1,h2,p{text-align:center}
-h1{font-size:26px;letter-spacing:2px}
-h2{font-size:19px}
-.muted{color:#94a9c5;font-size:13px;line-height:1.6}
-input,select{width:100%;padding:13px;margin:7px 0;background:#081321;color:white;border:1px solid #245078;border-radius:12px}
-.btn{width:100%;padding:14px;border:1px solid #167cc4;border-radius:13px;color:white;background:linear-gradient(90deg,#0759b7,#08a7ed);font-weight:bold;margin-top:9px}
-.btn:disabled{opacity:.55}
-.orb{width:150px;height:150px;border-radius:50%;margin:20px auto;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:radial-gradient(circle,#102d4e,#050914 70%);border:2px solid #10aaff;box-shadow:0 0 20px #008cff, inset 0 0 22px #008cff55;animation:pulse 2s infinite}
-.orb:before,.orb:after{content:"";position:absolute;inset:-10px;border:1px dashed #19baff;border-radius:50%;animation:spin 8s linear infinite}
-.orb:after{inset:-18px;border-color:#00f5a0;animation-direction:reverse;animation-duration:12s}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:4px 0 20px}
+.brand{font-size:clamp(21px,4vw,30px);font-weight:900;letter-spacing:1px;text-shadow:0 0 13px #078cff}
+.pill{border:1px solid #1d6395;border-radius:99px;padding:8px 12px;color:#92d9ff;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{padding:20px;min-width:0}
+.panel h3{margin:0 0 16px;color:#8bd6ff;font-size:18px}
+.label{display:block;color:#a9c5dc;font-size:13px;margin:10px 0 6px}
+.select{padding:13px;margin:0}
+.orb-wrap{display:flex;justify-content:center;align-items:center;padding:22px 0 27px}
+.orb{width:clamp(130px,32vw,190px);aspect-ratio:1;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#6ffaff 0,#078cff 17%,#073e9a 42%,#020a20 68%);box-shadow:0 0 22px #00aaff,0 0 58px #007bff80,inset 0 0 22px #65eaff80;animation:pulse 2.8s ease-in-out infinite}
+.orb:before,.orb:after{content:"";position:absolute;inset:-10px;border-radius:50%;border:2px solid #1ca9ff;opacity:.65;animation:spin 5s linear infinite}
+.orb:after{inset:-19px;border-color:#08d7ff66;border-style:dashed;animation-duration:10s}
+.orb span{font-size:42px;text-shadow:0 0 18px white;z-index:1}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{50%{box-shadow:0 0 35px #008cff,inset 0 0 25px #008cff66}}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin:2px;animation:pulse 1s infinite}
-.row{display:flex;gap:10px}
-.row>*{flex:1;min-width:0}
-.pair-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.pair{padding:11px 5px;border-radius:10px;border:1px solid #244362;background:#0a1424;color:#d9eaff}
-.pair.active{border-color:var(--green);color:var(--green);box-shadow:0 0 10px #00f5a022}
-.signal{font-size:28px;font-weight:bold;text-align:center;padding:10px}
-.buy{color:var(--green)}.sell{color:var(--red)}
-#history .item{border-bottom:1px solid #20334c;padding:10px 0;font-size:13px}
-#aiBox{height:180px;overflow:auto;background:#070d18;border-radius:12px;padding:10px;font-size:13px}
-.msg{padding:9px;margin:6px 0;border-radius:9px;background:#10233a;line-height:1.5}
-.logo{font-size:13px;color:#72caff;letter-spacing:3px}
-#login{padding-top:20px}
-.dollar{width:23px;height:23px;vertical-align:middle;margin-right:8px}
-.foot{text-align:center;color:#7186a3;font-size:11px;line-height:1.7;padding:14px}
+@keyframes pulse{50%{filter:brightness(1.25);box-shadow:0 0 36px #00d5ff,0 0 78px #007bff99,inset 0 0 25px #65eaff}}
+.generate{display:flex;align-items:center;justify-content:center;gap:12px;min-height:66px;font-size:16px}
+.dollar-photo{width:62px;height:35px;object-fit:cover;border-radius:4px;border:1px solid #ffe7a0;box-shadow:0 0 12px #ffcf4a99;transform:rotate(-4deg)}
+.result{margin-top:16px;border:1px solid #1d679b;border-radius:16px;padding:16px;background:#041325;line-height:1.8;overflow-wrap:anywhere}
+.buy{color:#43ffad;font-weight:900}
+.sell{color:#ff6f85;font-weight:900}
+.history-item{padding:10px 0;border-bottom:1px solid #153653;font-size:13px}
+.small{padding:10px 12px;border-radius:12px;font-size:13px}
+.chatbox{height:150px;overflow:auto;background:#020b17;border:1px solid #183d60;border-radius:13px;padding:10px;font-size:13px;margin-bottom:9px}
+.chatline{margin:7px 0;line-height:1.5}
+.chatline b{color:#78d4ff}
+.notice{font-size:12px;color:#93adc5;line-height:1.5;margin-top:10px}
+@media(max-width:650px){#app{padding:14px 12px 20px}.login{margin-top:5vh}.grid{grid-template-columns:1fr}.panel{padding:17px}.note{width:56px}h1{margin-bottom:30px}.topbar{align-items:flex-start}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div id="dots"></div>
+<div id="rain" aria-hidden="true"></div>
+<main id="app">
 
-<section id="login">
-  <div class="card">
-    <p class="logo">WELCOME TO</p>
-    <h1>HAMZA'S SIGNALS</h1>
-    <div class="orb"><div><div style="font-size:30px">◉</div><b>AI SIGNALS</b><br><span class="muted">WELCOME</span></div></div>
-    <h2 id="loginGreeting">Welcome, Trader!</h2>
-    <p class="muted">Sign in to access your trading dashboard</p>
-    <input id="username" placeholder="Username" autocomplete="username">
-    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
-    <button class="btn" onclick="login()">LOGIN</button>
-    <p id="loginError" class="muted"></p>
-  </div>
+<section id="loginView" class="glass login">
+<h1>HAMZA'S SIGNALS</h1>
+<h2>🔐 Secure Login</h2>
+<form id="loginForm" autocomplete="off">
+<input id="username" class="field" placeholder="Username" aria-label="Username" required>
+<input id="password" class="field" type="password" placeholder="Password" aria-label="Password" required>
+<button class="wide" type="submit">LOGIN</button>
+<div id="loginError" class="error" role="alert"></div>
+</form>
+<div class="subtle">Secure access • AI-powered market analysis</div>
 </section>
 
-<section id="dashboard" class="hidden">
-  <div class="card">
-    <p class="logo">HAMZA'S SIGNALS • AI TRADING ASSISTANT</p>
-    <h1 id="welcomeTitle">Welcome!</h1>
-    <p class="muted" id="todayGreeting"></p>
-    <div class="row">
-      <div><label class="muted">Broker</label>
-        <select id="broker"><option>Quotex</option><option>Tradowix</option></select>
-      </div>
-      <div><label class="muted">Timeframe</label>
-        <select id="timeframe">
-          <option>5 SEC</option><option>15 SEC</option><option>30 SEC</option>
-          <option>1 MIN</option><option>2 MIN</option><option>5 MIN</option>
-        </select>
-      </div>
-    </div>
-    <div class="orb" id="marketOrb"><div><b id="orbTitle">MARKET READY</b><br><span class="muted" id="orbSub">Select a pair</span><br><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
-    <p class="muted">Select a currency pair</p>
-    <input id="pairSearch" placeholder="Search pair e.g. EUR/USD" oninput="renderPairs()">
-    <div id="pairList" class="pair-list"></div>
-  </div>
-
-  <div class="card">
-    <h2>Generate Signal</h2>
-    <p class="muted">Market data will be checked before analysis.</p>
-    <button class="btn" id="generateBtn" onclick="generateSignal()">
-      <svg class="dollar" viewBox="0 0 24 24" fill="none" aria-label="Dollar icon">
-        <circle cx="12" cy="12" r="10" fill="#00f5a0"/>
-        <path d="M15.5 8.5c-.6-1-1.7-1.5-3.2-1.5-1.8 0-3 .9-3 2.2 0 3.5 6.4 1.2 6.4 4.7 0 1.5-1.4 2.6-3.5 2.6-1.5 0-2.8-.6-3.6-1.7M12 5v14" stroke="#04251b" stroke-width="1.7" stroke-linecap="round"/>
-      </svg>
-      GENERATE SIGNAL
-    </button>
-    <div id="signalResult" class="hidden">
-      <div id="signalDirection" class="signal">—</div>
-      <p id="signalPair"></p>
-      <div class="row">
-        <div class="card"><p class="muted">Latest price</p><h2 id="price">—</h2></div>
-        <div class="card"><p class="muted">RSI (14)</p><h2 id="rsi">—</h2></div>
-      </div>
-      <p id="signalDetails" class="muted"></p>
-      <p class="muted">Indicator score is not a verified win probability. Trading carries risk.</p>
-    </div>
-    <p id="status" class="muted">Ready to scan.</p>
-  </div>
-
-  <div class="card">
-    <h2>Signal History</h2>
-    <div id="history"><p class="muted">No signals yet.</p></div>
-  </div>
-
-  <div class="card">
-    <h2>Talk to AI</h2>
-    <p class="muted">Ask about indicators, market concepts or risk management.</p>
-    <div id="aiBox"><div class="msg">AI: Assalam-o-Alaikum! Main HAMZA'S SIGNALS AI assistant hoon. Kya poochna chahte ho?</div></div>
-    <input id="aiInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendAI()">
-    <button class="btn" onclick="sendAI()">ASK AI</button>
-  </div>
-  <button class="btn" style="background:#111d2c" onclick="logout()">LOG OUT</button>
-  <div class="foot">Market data may differ from Quotex/Tradowix OTC prices. Signals are informational, not guaranteed. Never risk money you cannot afford to lose.</div>
-</section>
+<section id="dashboardView" class="hidden">
+<div class="topbar">
+<div class="brand">HAMZA'S SIGNALS</div>
+<div class="pill" id="welcomePill">Assalam-o-Alaikum, Hamza 👋</div>
+<button id="logoutBtn" class="small">LOG OUT</button>
 </div>
 
-<script>
-const MARKET_API="https://hamza-signals-api.hamzamughal198226.workers.dev";
-const pairs=[
-"EUR/USD","GBP/USD","USD/JPY","AUD/USD","USD/CAD","USD/CHF","NZD/USD",
-"EUR/GBP","EUR/JPY","EUR/CHF","EUR/AUD","EUR/CAD","EUR/NZD",
-"GBP/JPY","GBP/CHF","GBP/AUD","GBP/CAD","GBP/NZD",
-"AUD/JPY","AUD/CHF","AUD/CAD","AUD/NZD","CAD/JPY","CAD/CHF",
-"CHF/JPY","NZD/JPY","NZD/CHF","NZD/CAD","USD/SGD","USD/HKD",
-"USD/ZAR","USD/MXN","USD/TRY","EUR/TRY","EUR/ZAR","GBP/ZAR",
-"XAU/USD","XAG/USD"
-];
-let selectedPair="EUR/USD";
-let historyItems=[];
+<section class="glass panel" style="text-align:center;margin-bottom:16px">
+<h2 id="greeting" style="margin-bottom:5px">Welcome, Hamza! 👋</h2>
+<div style="color:#a8c8e4">Ready to generate your next signal?</div>
+<div class="orb-wrap"><div class="orb"><span>⚡</span></div></div>
+<div class="pill">AI MARKET SCANNER • LIVE DATA WHEN AVAILABLE</div>
+</section>
 
-function greeting(){
- const h=new Date().getHours();
- if(h<12)return "Good Morning";
- if(h<17)return "Good Afternoon";
- if(h<21)return "Good Evening";
- return "Good Night";
+<div class="grid">
+<section class="glass panel">
+<h3>⚙️ Signal Generator</h3>
+<label class="label" for="broker">Broker</label>
+<select class="select" id="broker">
+<option>Quotex</option><option>Tradowix</option>
+</select>
+
+<label class="label" for="pairSearch">Search currency / asset</label>
+<input id="pairSearch" class="field" placeholder="Search pair e.g. EUR/USD">
+
+<label class="label" for="pair">Currency Pair</label>
+<select class="select" id="pair"></select>
+
+<label class="label" for="timeframe">Timeframe</label>
+<select class="select" id="timeframe">
+<option value="5sec">5 SEC</option>
+<option value="15sec">15 SEC</option>
+<option value="30sec">30 SEC</option>
+<option value="1min" selected>1 MIN</option>
+<option value="2min">2 MIN</option>
+<option value="5min">5 MIN</option>
+</select>
+
+<button id="generateBtn" class="wide generate" type="button">
+<img class="dollar-photo" alt="US dollar banknote" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/United_States_one_dollar_bill%2C_obverse.jpg/320px-United_States_one_dollar_bill%2C_obverse.jpg">
+GENERATE SIGNAL
+</button>
+<div id="signalResult" class="result hidden" aria-live="polite"></div>
+<div class="notice">Signals are analysis, not guaranteed outcomes. Short timeframes can be noisy. No broker trade is placed automatically.</div>
+</section>
+
+<section class="glass panel">
+<h3>📊 AI Analysis</h3>
+<div class="result" id="marketStatus">Choose an asset and generate a signal to request market data.</div>
+<h3 style="margin-top:22px">🕘 Signal History</h3>
+<div id="history"><div class="subtle">Your recent signals will appear here.</div></div>
+<button id="clearHistory" class="small" style="margin-top:12px" type="button">CLEAR HISTORY</button>
+</section>
+
+<section class="glass panel" style="grid-column:1/-1">
+<h3>🤖 Hamza AI Assistant</h3>
+<div id="chatbox" class="chatbox">
+<div class="chatline"><b>Hamza AI:</b> Assalam-o-Alaikum Hamza! Ask me about the dashboard or market indicators.</div>
+</div>
+<div style="display:flex;gap:8px">
+<input id="chatInput" class="field" style="margin:0;min-width:0" placeholder="Type your question...">
+<button id="chatSend" class="small" type="button">SEND</button>
+</div>
+<div class="notice">AI replies require the Cloudflare Worker /ai endpoint to be configured.</div>
+</section>
+</div>
+</section>
+</main>
+
+<footer>HAMZA DEVELOPERS</footer>
+
+<script>
+(function(){
+'use strict';
+
+const API_BASE='https://hamza-signals-api.hamzamughal198226.workers.dev';
+const DOLLAR_IMG='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/United_States_one_dollar_bill%2C_obverse.jpg/320px-United_States_one_dollar_bill%2C_obverse.jpg';
+const pairs=['EUR/USD','GBP/USD','USD/JPY','AUD/USD','USD/CAD','USD/CHF','NZD/USD','EUR/GBP','EUR/JPY','GBP/JPY','AUD/JPY','EUR/AUD','GBP/AUD','USD/TRY','USD/MXN','XAU/USD','XAG/USD','BTC/USD','ETH/USD'];
+const $=id=>document.getElementById(id);
+let rainTimer=null;
+
+function makeDollar(){
+ const img=document.createElement('img');
+ img.className='note';
+ img.src=DOLLAR_IMG;
+ img.alt='';
+ img.style.left=(Math.random()*100)+'vw';
+ img.style.animationDuration=(7+Math.random()*7)+'s';
+ img.style.setProperty('--drift',((Math.random()*180)-90)+'px');
+ img.style.setProperty('--spin',((Math.random()*300)-150)+'deg');
+ $('rain').appendChild(img);
+ setTimeout(()=>img.remove(),15000);
 }
-document.getElementById("loginGreeting").textContent=greeting()+"!";
-function login(){
- const u=document.getElementById("username").value.trim();
- const p=document.getElementById("password").value;
- if(u!=="Hamza"||p!=="Aliza"){
-   document.getElementById("loginError").textContent="Incorrect username or password.";
-   return;
- }
- document.getElementById("login").classList.add("hidden");
- document.getElementById("dashboard").classList.remove("hidden");
- document.getElementById("welcomeTitle").textContent=greeting()+", Hamza!";
- document.getElementById("todayGreeting").textContent=
-   "Assalam-o-Alaikum! "+greeting()+". Market ko carefully analyze karein aur risk management follow karein.";
- renderPairs();
+function startRain(){
+ if(rainTimer)return;
+ for(let i=0;i<8;i++)setTimeout(makeDollar,i*450);
+ rainTimer=setInterval(makeDollar,850);
 }
-function logout(){
- document.getElementById("dashboard").classList.add("hidden");
- document.getElementById("login").classList.remove("hidden");
+function stopRain(){
+ if(rainTimer){clearInterval(rainTimer);rainTimer=null;}
 }
-function renderPairs(){
- const q=document.getElementById("pairSearch").value.toUpperCase().trim();
- const list=document.getElementById("pairList");
- list.innerHTML="";
- pairs.filter(p=>p.includes(q)).forEach(p=>{
-   const b=document.createElement("button");
-   b.className="pair"+(p===selectedPair?" active":"");
-   b.textContent=p;
-   b.onclick=()=>{
-     selectedPair=p;renderPairs();
-     document.getElementById("orbTitle").textContent=p;
-     document.getElementById("orbSub").textContent="PAIR SELECTED";
-   };
-   list.appendChild(b);
+startRain();
+
+function populatePairs(filter){
+ const sel=$('pair');
+ const old=sel.value;
+ sel.innerHTML='';
+ pairs.filter(p=>p.toLowerCase().includes((filter||'').toLowerCase().trim())).forEach(p=>{
+  const o=document.createElement('option');
+  o.value=p;o.textContent=p;sel.appendChild(o);
  });
-}
-function ema(values,period){
- if(values.length<period)return null;
- let e=values.slice(0,period).reduce((a,b)=>a+b,0)/period;
- const k=2/(period+1);
- for(let i=period;i<values.length;i++)e=values[i]*k+e*(1-k);
- return e;
-}
-function rsi(values,period=14){
- if(values.length<=period)return null;
- let gains=0,losses=0;
- for(let i=values.length-period;i<values.length;i++){
-   const d=values[i]-values[i-1];
-   if(d>0)gains+=d;else losses-=d;
+ if(Array.from(sel.options).some(o=>o.value===old))sel.value=old;
+ if(!sel.options.length){
+  const o=document.createElement('option');o.value='';o.textContent='No matching pair';sel.appendChild(o);
  }
- if(losses===0)return 100;
- return 100-(100/(1+gains/losses));
 }
-async function generateSignal(){
- const btn=document.getElementById("generateBtn");
- const status=document.getElementById("status");
+populatePairs('');
+$('pairSearch').addEventListener('input',e=>populatePairs(e.target.value));
+
+$('loginForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ if($('username').value.trim()==='Hamza'&&$('password').value==='Aliza'){
+  $('loginError').textContent='';
+  $('loginView').classList.add('hidden');
+  $('dashboardView').classList.remove('hidden');
+  $('greeting').textContent='Assalam-o-Alaikum, Hamza! 👋 Welcome Back!';
+  $('welcomePill').textContent='Welcome, Hamza 👋';
+  stopRain();
+  window.scrollTo({top:0,behavior:'smooth'});
+ }else{
+  $('loginError').textContent='Incorrect username or password. Please try again.';
+ }
+});
+
+$('logoutBtn').addEventListener('click',()=>{
+ $('dashboardView').classList.add('hidden');
+ $('loginView').classList.remove('hidden');
+ $('password').value='';
+ startRain();
+ window.scrollTo({top:0,behavior:'smooth'});
+});
+
+function ema(vals,p){
+ if(vals.length<p)return null;
+ const k=2/(p+1);
+ let v=vals.slice(0,p).reduce((a,b)=>a+b,0)/p;
+ for(let i=p;i<vals.length;i++)v=vals[i]*k+v*(1-k);
+ return v;
+}
+function rsi(vals,p){
+ if(vals.length<p+1)return null;
+ let up=0,dn=0;
+ for(let i=vals.length-p;i<vals.length;i++){
+  const d=vals[i]-vals[i-1];
+  if(d>0)up+=d;else dn-=d;
+ }
+ if(!dn)return 100;
+ const rs=(up/p)/(dn/p);
+ return 100-100/(1+rs);
+}
+function getCandles(d){
+ if(Array.isArray(d))return d;
+ if(Array.isArray(d.values))return d.values;
+ if(Array.isArray(d.candles))return d.candles;
+ if(d.data&&Array.isArray(d.data.values))return d.data.values;
+ return [];
+}
+function val(c,k){return Number(c[k]??c[k.toUpperCase()]??NaN);}
+function fmt(n){return Number.isFinite(n)?n.toFixed(5):'N/A';}
+
+function addHistory(x){
+ const box=$('history');
+ const empty=box.querySelector('.subtle');
+ if(empty)empty.remove();
+ const el=document.createElement('div');
+ el.className='history-item';
+ const b=document.createElement('b');
+ b.textContent=x.pair+' · '+x.tf+' · ';
+ const s=document.createElement('span');
+ s.className=x.side==='BUY'?'buy':'sell';
+ s.textContent=x.side;
+ const br=document.createElement('br');
+ const meta=document.createElement('span');
+ meta.style.color='#8ba8c4';
+ meta.textContent=x.time+' · Confidence estimate: '+x.confidence+'%';
+ el.append(b,s,br,meta);
+ box.prepend(el);
+ while(box.children.length>12)box.lastElementChild.remove();
+}
+
+$('clearHistory').addEventListener('click',()=>{
+ $('history').innerHTML='<div class="subtle">Your recent signals will appear here.</div>';
+});
+
+$('generateBtn').addEventListener('click',async()=>{
+ const btn=$('generateBtn');
+ const pair=$('pair').value;
+ const tf=$('timeframe').value;
+ if(!pair){
+  $('signalResult').classList.remove('hidden');
+  $('signalResult').textContent='Please select a valid currency pair.';
+  return;
+ }
+
  btn.disabled=true;
- document.getElementById("signalResult").classList.add("hidden");
- document.getElementById("orbTitle").textContent="SCANNING";
- document.getElementById("orbSub").textContent=selectedPair;
- status.textContent="Market data fetch ho raha hai...";
+ btn.textContent='SCANNING MARKET...';
+ $('signalResult').classList.remove('hidden');
+ $('signalResult').textContent='Requesting market candles and calculating RSI / EMA...';
+ $('marketStatus').textContent='Connecting to live market data...';
+
  try{
-   // Twelve Data supports standard intervals such as 1min and 5min,
-   // not native 5-second or 15-second candles.
-   const tf=document.getElementById("timeframe").value;
-   const interval=tf==="5 MIN"?"5min":"1min";
-   const url=MARKET_API+"/market?symbol="+encodeURIComponent(selectedPair)+"&interval="+interval;
-   const res=await fetch(url);
-   const data=await res.json();
-   if(!res.ok||data.status!=="ok"||!data.candles||data.candles.length<22){
-     throw new Error(data.message||data.error||"Market data unavailable");
-   }
-   const candles=data.candles.slice().reverse();
-   const closes=candles.map(c=>Number(c.close));
-   if(closes.some(v=>!Number.isFinite(v)))throw new Error("Invalid candle data");
-   const fast=ema(closes,9),slow=ema(closes,21),rv=rsi(closes,14);
-   const last=candles[candles.length-1];
-   const prev=candles[candles.length-2];
-   let score=0;
-   if(fast>slow)score++;
-   if(fast<slow)score--;
-   if(closes.at(-1)>closes.at(-2))score++;
-   if(closes.at(-1)<closes.at(-2))score--;
-   if(rv<35)score++;
-   if(rv>65)score--;
-   if(Number(last.close)>Number(last.open))score++;
-   if(Number(last.close)<Number(last.open))score--;
-   let direction="WAIT",cls="";
-   if(score>=2&&rv<70){direction="BUY";cls="buy"}
-   else if(score<=-2&&rv>30){direction="SELL";cls="sell"}
-   const result=document.getElementById("signalResult");
-   result.classList.remove("hidden");
-   const d=document.getElementById("signalDirection");
-   d.className="signal "+cls;
-   d.textContent=direction==="WAIT"?"NO CLEAR SIGNAL":direction==="BUY"?"BUY ▲":"SELL ▼";
-   document.getElementById("signalPair").textContent=
-     selectedPair+" • "+document.getElementById("broker").value+" • "+tf;
-   document.getElementById("price").textContent=Number(last.close).toFixed(5);
-   document.getElementById("rsi").textContent=rv.toFixed(1);
-   document.getElementById("signalDetails").textContent=
-     "EMA 9: "+fast.toFixed(5)+" | EMA 21: "+slow.toFixed(5)+
-     "\nIndicator alignment score: "+Math.round(Math.abs(score)/4*100)+"%"+
-     "\nData interval: "+interval+
-     (tf.includes("SEC")||tf==="2 MIN"?" (selected expiry is not directly supported by this candle feed)":"");
-   status.textContent="Analysis complete. Signal is not a guarantee.";
-   document.getElementById("orbTitle").textContent=direction;
-   document.getElementById("orbSub").textContent="ANALYSIS COMPLETE";
-   historyItems.unshift({pair:selectedPair,dir:direction,tf:tf,time:new Date().toLocaleTimeString()});
-   historyItems=historyItems.slice(0,10);
-   document.getElementById("history").innerHTML=historyItems.map(x=>
-     '<div class="item"><b>'+x.pair+'</b> — '+x.dir+'<br><span class="muted">'+x.tf+' • '+x.time+'</span></div>'
-   ).join("");
- }catch(e){
-   status.textContent="Error: "+e.message+". Internet/API check karo.";
-   document.getElementById("orbTitle").textContent="DATA ERROR";
-   document.getElementById("orbSub").textContent="Try again";
- }finally{btn.disabled=false;}
-}
-async function sendAI(){
- const input=document.getElementById("aiInput");
- const text=input.value.trim();
- if(!text)return;
- const box=document.getElementById("aiBox");
- const user=document.createElement("div");
- user.className="msg";user.textContent="You: "+text;box.appendChild(user);
- const answer=document.createElement("div");
- answer.className="msg";answer.textContent="AI: Thinking...";box.appendChild(answer);
- input.value="";
+  const interval=({'5sec':'1min','15sec':'1min','30sec':'1min','1min':'1min','2min':'2min','5min':'5min'})[tf];
+  const res=await fetch(API_BASE+'/market?symbol='+encodeURIComponent(pair)+'&interval='+encodeURIComponent(interval),{cache:'no-store'});
+  if(!res.ok)throw new Error('Market API returned HTTP '+res.status);
+
+  const data=await res.json();
+  const candles=getCandles(data);
+  if(candles.length<22)throw new Error('Not enough candles. Check the Worker /market endpoint and Twelve Data API key.');
+
+  const closes=candles.map(c=>val(c,'close')).filter(Number.isFinite);
+  if(closes.length<22)throw new Error('Market response has no valid candle close values.');
+
+  const rv=rsi(closes,14);
+  const e9=ema(closes,9);
+  const e21=ema(closes,21);
+  const side=e9>e21&&(rv===null||rv<70)?'BUY':e9<e21&&(rv===null||rv>30)?'SELL':(closes[closes.length-1]>=closes[closes.length-2]?'BUY':'SELL');
+  const trend=e9>e21?'Bullish':e9<e21?'Bearish':'Neutral';
+  const confidence=Math.min(89,Math.max(52,Math.round(60+Math.abs((e9-e21)/e21)*900+(rv!==null&&((side==='BUY'&&rv<60)||(side==='SELL'&&rv>40))?5:0))));
+  const now=new Date().toLocaleTimeString();
+
+  const result=$('signalResult');
+  result.textContent='';
+  const add=(tag,txt,cls)=>{
+   const el=document.createElement(tag);
+   el.textContent=txt;
+   if(cls)el.className=cls;
+   result.appendChild(el);
+  };
+  add('div',side==='BUY'?'🟢 BUY':'🔴 SELL',side==='BUY'?'buy':'sell');
+  add('div','Pair: '+pair);
+  add('div','Broker: '+$('broker').value);
+  add('div','Timeframe: '+tf.toUpperCase());
+  add('div','Confidence estimate: '+confidence+'%');
+  add('div','Market trend: '+trend);
+  add('div','RSI(14): '+(rv===null?'N/A':rv.toFixed(2)));
+  add('div','EMA 9: '+fmt(e9)+' · EMA 21: '+fmt(e21));
+  add('div','Latest close: '+fmt(closes[closes.length-1]));
+  add('div','Data received: '+now);
+
+  $('marketStatus').textContent='Market data received. Pair: '+pair+' | Candles analyzed: '+closes.length+' | Trend: '+trend+' | RSI: '+(rv===null?'N/A':rv.toFixed(2))+' | EMA 9/21: '+fmt(e9)+' / '+fmt(e21);
+  addHistory({pair:pair,tf:tf,side:side,confidence:confidence,time:now});
+
+ }catch(err){
+  $('signalResult').textContent='Market data unavailable: '+String(err.message||err)+'. Check internet and Cloudflare Worker /market configuration. No signal was generated without live data.';
+  $('marketStatus').textContent='Could not fetch live market candles. Check Worker and Twelve Data configuration.';
+ }finally{
+  btn.disabled=false;
+  btn.innerHTML='<img class="dollar-photo" alt="US dollar banknote" src="'+DOLLAR_IMG+'"> GENERATE SIGNAL';
+ }
+});
+
+async function sendChat(){
+ const msg=$('chatInput').value.trim();
+ if(!msg)return;
+ const box=$('chatbox');
+ const u=document.createElement('div');
+ u.className='chatline';u.textContent='You: '+msg;box.appendChild(u);
+ $('chatInput').value='';
+ const wait=document.createElement('div');
+ wait.className='chatline';wait.textContent='Hamza AI: Thinking...';box.appendChild(wait);
+ box.scrollTop=box.scrollHeight;
+
  try{
-   const res=await fetch(MARKET_API+"/ai",{
-     method:"POST",headers:{"Content-Type":"application/json"},
-     body:JSON.stringify({message:text})
-   });
-   const data=await res.json();
-   if(!res.ok||data.status!=="ok")throw new Error(data.error||"AI request failed");
-   answer.textContent="AI: "+data.answer;
+  const r=await fetch(API_BASE+'/ai',{
+   method:'POST',
+   headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({message:msg})
+  });
+  if(!r.ok)throw new Error('AI endpoint HTTP '+r.status);
+  const d=await r.json();
+  wait.textContent='Hamza AI: '+(d.reply||d.response||d.message||'No reply received.');
  }catch(e){
-   answer.textContent="AI error: "+e.message+". Worker aur OPENAI_API_KEY check karo.";
+  wait.textContent='Hamza AI: AI service unavailable. Check Cloudflare Worker /ai endpoint.';
  }
  box.scrollTop=box.scrollHeight;
 }
+$('chatSend').addEventListener('click',sendChat);
+$('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat();});
+})();
 </script>
 </body>
 </html>
